@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-class AdminController  extends BasicController
+class AdminController extends BasicController
 {
 
   public function __construct()
@@ -14,10 +14,11 @@ class AdminController  extends BasicController
   /**
    * Callback for /admin route.
    */
-  public function adminPageAction() {
-    $this->content = $this->render('/views/layouts/admin_content.php');
-    $sidebar = $this->render('/views/layouts/admin_sidebar.php');
-    $this->renderLayout('/views/layouts/sidebar_page.tpl.php',array('sidebar'=>$sidebar));
+  public function adminPageAction()
+  {
+    $this->content = $this->render('/views/admin/admin_content.tpl.php');
+    $sidebar = $this->render('/views/forms/admin_search_form.tpl.php');
+    $this->renderLayout('/views/layouts/sidebar_page.tpl.php', array('sidebar' => $sidebar));
   }
 
 

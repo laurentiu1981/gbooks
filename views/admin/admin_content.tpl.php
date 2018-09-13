@@ -8,7 +8,5 @@
     <th>Options</th>
   </tr>
   </thead>
-
-
-
+  
 </table>
