@@ -22,6 +22,8 @@
 </div>
 
 <?php include SITE_ROOT . '/views/layouts/partials/footer.tpl.php' ?>
-</body>
+
 <?php echo $scriptElements; ?>
+</body>
+
 </html>
