@@ -13,9 +13,12 @@
 <body>
 <?php include SITE_ROOT . '/views/layouts/partials/header.tpl.php' ?>
 
-<content class="col-lg-12" >
-  <div><?php echo $content; ?></div>
-</content>
+<div class="row">
+  <div class="col-lg-2"><?php echo $sidebar; ?></div>
+  <content class="col-lg-10">
+    <div><?php echo $content; ?></div>
+  </content>
+</div>
 
 <?php include SITE_ROOT . '/views/layouts/partials/footer.tpl.php' ?>
 </body>
