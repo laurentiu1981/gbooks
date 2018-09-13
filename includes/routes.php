@@ -11,6 +11,7 @@ function gbooks_routes_definitions() {
       'GET' => 'Controllers\HomeController::homepageAction',
     ),
     '/' => 'Controllers\HomeController::homepageAction',
+		'/logo' => 'Controllers\HomeController::homepageAction',
   );
 }
 
