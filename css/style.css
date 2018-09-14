@@ -10,3 +10,23 @@
     min-height: 36px;
     overflow: hidden;
 }
+
+.menu {
+    list-style-type: none;
+    overflow: auto;
+}
+
+.menu li {
+    float: left;
+    padding: 2px;
+}
+
+.center-div{
+    display: flex;
+    padding-top: 5%;
+}
+
+form{
+    width: 50%;
+    margin: 0 auto;
+}

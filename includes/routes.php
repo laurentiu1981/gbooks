@@ -13,7 +13,9 @@ function gbooks_routes_definitions() {
     '/' => 'Controllers\HomeController::homepageAction',
     '/admin'=> array(
       'GET' => 'Controllers\AdminController::adminpageAction',
-    )
+    ),
+		'/register' => 'Controllers\UserAuthenticationController::registerAction',
+		'/login' => 'Controllers\UserAuthenticationController::loginAction',
   );
 }
 
