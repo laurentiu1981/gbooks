@@ -1,14 +1,25 @@
-<html>
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-</head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<ul class="row" id="bar">
-    <li class="col-lg-1"><a href="/"><img src="/images/books_logo.png"/></a></li>
-    <li class="col-lg-1" id="here_hov"><a href="/">Home</a></li>
-    <li class="col-lg-1" id="here_hov"><a href="/admin">Admin</a></li>
-    <li class="col-lg-offset-8 col-lg-1 glyphicon glyphicon-log-in" id="here_hov"><a href="/login">Login</a></li>
-</ul>
-</html>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a href="/">
+                <img class="navbar-brand" src="/images/books_logo.png"/>
+            </a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/"> Home</a></li>
+            <li><a href="/admin"> Admin</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="/login">
+                    <span class="glyphicon glyphicon-log-in">
+                    </span> Login
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
