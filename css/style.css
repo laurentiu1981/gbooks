@@ -1,9 +1,0 @@
-.menu {
-    list-style-type: none;
-    overflow: auto;
-}
-
-.menu li {
-    float: left;
-    padding: 2px;
-}

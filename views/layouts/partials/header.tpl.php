@@ -1,6 +1,21 @@
-<ul class="menu">
-    <li><a href="/"><img src="/images/books_logo.png"/></a></li>
-    <li><a href="/">Home</a></li>
-    <li><a href="/admin">Admin</a></li>
-    <li><a href="/login">Login</a></li>
-</ul>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a href="/">
+                <img class="navbar-brand" src="/images/books_logo.png"/>
+            </a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="/"> Home</a></li>
+            <li><a href="/admin"> Admin</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="/login">
+                    <span class="glyphicon glyphicon-log-in">
+                    </span> Login
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
