@@ -16,7 +16,7 @@
 <?php include SITE_ROOT . '/views/layouts/partials/header.tpl.php' ?>
 
 <content class="col-lg-12" >
-  <div><?php echo $content; ?></div>
+    <div><?php echo $content; ?></div>
 </content>
 
 <?php include SITE_ROOT . '/views/layouts/partials/footer.tpl.php' ?>

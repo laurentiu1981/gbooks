@@ -10,3 +10,37 @@
     min-height: 36px;
     overflow: hidden;
 }
+
+.menu {
+    list-style-type: none;
+    overflow: auto;
+}
+
+.menu li {
+    float: left;
+    padding: 2px;
+}
+
+.center-div {
+    display: flex;
+    padding-top: 5%;
+    flex-direction: column;
+}
+
+.form-register,
+.form-login {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.form-register ul,
+.form-login ul {
+    list-style-type: none;
+}
+
+.messages .alert {
+    padding: 5px;
+    border-radius: 0px;
+    border: none;
+    margin-bottom: 0px;
+}
