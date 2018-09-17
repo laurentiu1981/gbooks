@@ -1,0 +1,12 @@
+.image-wrapper {
+    text-align: center;
+}
+
+.image-wrapper .thumbnail {
+    display: inline-block;
+}
+
+.book-title {
+    min-height: 36px;
+    overflow: hidden;
+}
