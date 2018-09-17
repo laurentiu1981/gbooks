@@ -1,5 +1,5 @@
 <div class="center-div">
-    <form method="post" class="form-horizontal">
+    <form method="post" class="form-horizontal form-register">
         <div class="messages">
 			<?php echo $message;?>
         </div>

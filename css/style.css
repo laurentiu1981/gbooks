@@ -27,12 +27,12 @@
     flex-direction: column;
 }
 
-form{
+.form-register, .form-login{
     width: 50%;
     margin: 0 auto;
 }
 
-form ul{
+.form-register ul, .form-login ul{
     list-style-type: none;
 }
 

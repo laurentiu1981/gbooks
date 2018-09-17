@@ -14,17 +14,17 @@
  */
 function gbooks_render_template($template_file, $variables)
 {
-	// Extract the variables to a local namespace
-	extract($variables, EXTR_SKIP);
+  // Extract the variables to a local namespace
+  extract($variables, EXTR_SKIP);
 
-	// Start output buffering
-	ob_start();
+  // Start output buffering
+  ob_start();
 
-	// Include the template file
-	include SITE_ROOT . '/' . $template_file;
+  // Include the template file
+  include SITE_ROOT . '/' . $template_file;
 
-	// End buffering and return its contents
-	return ob_get_clean();
+  // End buffering and return its contents
+  return ob_get_clean();
 }
 
 /**
@@ -37,8 +37,8 @@ function gbooks_render_template($template_file, $variables)
  */
 function redirect($path, $http_code = 302)
 {
-	header('Location: ' . $path, TRUE, $http_code);
-	exit;
+  header('Location: ' . $path, TRUE, $http_code);
+  exit;
 }
 
 /**
@@ -50,10 +50,10 @@ function redirect($path, $http_code = 302)
  */
 function set_message($message, $type)
 {
-	if (!isset($_SESSION)) {
-		session_start();
-	}
-	$_SESSION['messages'][$type][] = $message;
+  if (!isset($_SESSION)) {
+    session_start();
+  }
+  $_SESSION['messages'][$type][] = $message;
 }
 
 /**
@@ -64,9 +64,9 @@ function set_message($message, $type)
  */
 function set_error_messages($messages)
 {
-	foreach ($messages as $message) {
-		set_message($message, 'alert alert-warning');
-	}
+  foreach ($messages as $message) {
+    set_message($message, 'alert alert-warning');
+  }
 }
 
 /**
@@ -77,12 +77,12 @@ function set_error_messages($messages)
  */
 function get_messages()
 {
-	if (!isset($_SESSION)) {
-		session_start();
-	}
-	$messages = !empty($_SESSION['messages']) ? $_SESSION['messages'] : array();
-	unset($_SESSION['messages']);
-	return $messages;
+  if (!isset($_SESSION)) {
+    session_start();
+  }
+  $messages = !empty($_SESSION['messages']) ? $_SESSION['messages'] : array();
+  unset($_SESSION['messages']);
+  return $messages;
 }
 
 /**
@@ -95,12 +95,21 @@ function get_messages()
  */
 function render_messages($messages)
 {
-	$output = '<ul>';
-	foreach ($messages as $type => $messages_list) {
-		foreach ($messages_list as $message) {
-			$output .= '<li class="' . $type . '">' . $message . '</li>';
-		}
-	}
-	$output .= '</ul>';
-	return $output;
+  $classes = messages_bootstrap_classes();
+  $output = '<ul>';
+  foreach ($messages as $type => $messages_list) {
+    foreach ($messages_list as $message) {
+      $output .= '<li class="' . (isset($classes[$type]) ? $classes[$type] : '') . '">' . $message . '</li>';
+    }
+  }
+  $output .= '</ul>';
+  return $output;
+}
+
+function messages_bootstrap_classes()
+{
+  return array(
+    'status' => 'alert alert-success',
+    'error' => 'alert alert-warning',
+  );
 }

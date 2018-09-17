@@ -7,23 +7,23 @@
  */
 function gbooks_routes_definitions()
 {
-	return array(
-		'/home' => array(
-			'GET' => 'Controllers\HomeController::homepageAction',
-		),
-		'/' => 'Controllers\HomeController::homepageAction',
-		'/admin' => array(
-			'GET' => 'Controllers\AdminController::adminpageAction',
-		),
-		'/register' => array(
-			'GET' => 'Controllers\UserAuthenticationController::registerPageAction',
-			'POST' => 'Controllers\UserAuthenticationController::registerPost',
-		),
-		'/login' => array(
-			'GET' => 'Controllers\UserAuthenticationController::loginPageAction',
-			'POST' => 'Controllers\UserAuthenticationController::loginPost',
-		),
-	);
+  return array(
+    '/home' => array(
+      'GET' => 'Controllers\HomeController::homepageAction',
+    ),
+    '/' => 'Controllers\HomeController::homepageAction',
+    '/admin' => array(
+      'GET' => 'Controllers\AdminController::adminpageAction',
+    ),
+    '/register' => array(
+      'GET' => 'Controllers\UserAuthenticationController::registerPageAction',
+      'POST' => 'Controllers\UserAuthenticationController::registerPost',
+    ),
+    '/login' => array(
+      'GET' => 'Controllers\UserAuthenticationController::loginPageAction',
+      'POST' => 'Controllers\UserAuthenticationController::loginPost',
+    ),
+  );
 }
 
 /**
@@ -32,34 +32,34 @@ function gbooks_routes_definitions()
 function gbooks_routes_execute_handler()
 {
 
-	$routes = gbooks_routes_definitions();
-	$request_method = strtoupper($_SERVER['REQUEST_METHOD']);
+  $routes = gbooks_routes_definitions();
+  $request_method = strtoupper($_SERVER['REQUEST_METHOD']);
 
-	$controllerClass = FALSE;
-	$controllerAction = 'get';
+  $controllerClass = FALSE;
+  $controllerAction = 'get';
 
-	if (isset($routes[$_GET['q']])) {
-		$routeDefinition = $routes[$_GET['q']];
-		if (is_array($routeDefinition) && isset($routeDefinition[$request_method])) {
-			$routeParts = explode('::', $routeDefinition[$request_method]);
+  if (isset($routes[$_GET['q']])) {
+    $routeDefinition = $routes[$_GET['q']];
+    if (is_array($routeDefinition) && isset($routeDefinition[$request_method])) {
+      $routeParts = explode('::', $routeDefinition[$request_method]);
 
-		} else {
-			$routeParts = explode('::', $routeDefinition);
-		}
+    } else {
+      $routeParts = explode('::', $routeDefinition);
+    }
 
-		if (!empty($routeParts)) {
-			$controllerClass = $routeParts[0];
-			if (isset($routeParts[1])) {
-				$controllerAction = $routeParts[1];
-			}
-		}
-	}
+    if (!empty($routeParts)) {
+      $controllerClass = $routeParts[0];
+      if (isset($routeParts[1])) {
+        $controllerAction = $routeParts[1];
+      }
+    }
+  }
 
-	if ($controllerClass) {
-		$controller = new $controllerClass();
-		$controller->{$controllerAction}();
-	} else {
-		echo '404 not found';
-	}
+  if ($controllerClass) {
+    $controller = new $controllerClass();
+    $controller->{$controllerAction}();
+  } else {
+    echo '404 not found';
+  }
 
 }
