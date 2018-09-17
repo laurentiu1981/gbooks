@@ -14,8 +14,14 @@ function gbooks_routes_definitions() {
     '/admin'=> array(
       'GET' => 'Controllers\AdminController::adminpageAction',
     ),
-		'/register' => 'Controllers\UserAuthenticationController::registerAction',
-		'/login' => 'Controllers\UserAuthenticationController::loginAction',
+		'/register' => array(
+			'GET' => 'Controllers\UserAuthenticationController::registerPageAction',
+			'POST' => 'Controllers\UserAuthenticationController::registerPost',
+		),
+		'/login' => array(
+			'GET' => 'Controllers\UserAuthenticationController::loginPageAction',
+			'POST' => 'Controllers\UserAuthenticationController::loginPost',
+			),
   );
 }
 

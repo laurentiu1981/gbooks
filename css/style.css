@@ -24,9 +24,21 @@
 .center-div{
     display: flex;
     padding-top: 5%;
+    flex-direction: column;
 }
 
 form{
     width: 50%;
     margin: 0 auto;
+}
+
+form ul{
+    list-style-type: none;
+}
+
+.messages .alert{
+    padding: 5px;
+    border-radius: 0px;
+    border: none;
+    margin-bottom: 0px;
 }

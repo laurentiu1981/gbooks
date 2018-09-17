@@ -25,3 +25,76 @@ function gbooks_render_template($template_file, $variables) {
   // End buffering and return its contents
   return ob_get_clean();
 }
+
+/**
+ * Redirects to given path.
+ *
+ * @param string $path
+ * 		Path to redirect to.
+ * @param int $http_code
+ * 		Http code.
+ */
+function redirect($path, $http_code = 302) {
+	header('Location: ' . $path, TRUE, $http_code);
+	exit;
+}
+
+/**
+ * Sets authentication messages accordingly.
+ * @param string $message
+ * 		Current message.
+ * @param string $type
+ * 		Message type corresponding to bootstrap class.
+ */
+function set_message($message, $type) {
+	if (!isset($_SESSION)) {
+		session_start();
+	}
+	$_SESSION['messages'][$type][] = $message;
+}
+
+/**
+ *Sets error messages accordingly.
+ *
+ * @param array $messages
+ * 		Current messages.
+ */
+function set_error_messages($messages) {
+	foreach ($messages as $message) {
+		set_message($message, 'alert alert-warning');
+	}
+}
+
+/**
+ * Returns an array of messages.
+ *
+ * @return array array
+ * 		Array of messages to be returned
+ */
+function get_messages() {
+	if (!isset($_SESSION)) {
+		session_start();
+	}
+	$messages = !empty($_SESSION['messages']) ? $_SESSION['messages'] : array();
+	unset($_SESSION['messages']);
+	return $messages;
+}
+
+/**
+ * Renders messages displayed to the user.
+ *
+ * @param array $messages
+ * 		Messages to be displayed.
+ * @return string
+ * 		HTML code for unordered list to display messages.
+ */
+function render_messages($messages) {
+	$output = '<ul>';
+	foreach ($messages as $type => $messages_list) {
+		foreach ($messages_list as $message) {
+			$output .= '<li class="' . $type . '">' . $message . '</li>';
+		}
+	}
+	$output .= '</ul>';
+	return $output;
+}

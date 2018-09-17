@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Sara Boanca
- * Date: 14.09.2018
- * Time: 10:05
- */
-
 namespace Controllers;
-
+use models\User;
 
 class UserAuthenticationController extends BasicController{
 
@@ -19,16 +12,54 @@ class UserAuthenticationController extends BasicController{
 	/**
 	 * Callback for /register route.
 	 */
-	public function registerAction() {
-		$this->content = 'Register content';
-		$this->renderLayout('/views/layouts/register.tpl.php');
+	public function registerPageAction() {
+		$message = render_messages(get_messages());
+		$this->content = $this->render('views/forms/register.tpl.php', array('message' => $message));
+		$this->renderLayout('/views/layouts/basic.tpl.php');
+	}
+
+	/**
+	 * Registers user if credentials are valid.
+	 */
+	public function registerPost(){
+		if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['confirm-password'])){
+			$email = $_POST['email'];
+			$password = $_POST['password'];
+			$passwordConfirmation = $_POST['confirm-password'];
+			$db = db_get_connection();
+			$user = new User($db);
+			if ($user->isRegistrationValid($email, $password, $passwordConfirmation)){
+				$user->createUser($email, $password);
+				set_message('User successfully created!', 'alert alert-success');
+				redirect('/admin');
+			}
+		}
+		$this->registerPageAction();
 	}
 
 	/**
 	 * Callback for /login route.
 	 */
-	public function loginAction() {
-		$this->content = 'Login content';
-		$this->renderLayout('/views/layouts/login.tpl.php');
+	public function loginPageAction() {
+		$message = render_messages(get_messages());
+		$this->content = $this->render('views/forms/login.tpl.php', array('message' => $message));
+		$this->renderLayout('/views/layouts/basic.tpl.php');
+	}
+
+	/**
+	 * Logs in user if credentials are valid.
+	 */
+	public function loginPost(){
+		if (isset($_POST['email']) && isset($_POST['password'])){
+			$email = $_POST['email'];
+			$password = $_POST['password'];
+			$db = db_get_connection();
+			$user = new User($db);
+			if ($user->areValidCredentials($email, $password)){
+				set_message('Logged in successfully!', 'alert alert-success');
+				redirect('/admin');
+			}
+		}
+		$this->loginPageAction();
 	}
 }
