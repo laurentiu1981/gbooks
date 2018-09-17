@@ -14,10 +14,10 @@
 <?php include SITE_ROOT . '/views/layouts/partials/header.tpl.php' ?>
 
 <div class="row">
-  <div class="col-sm-2"><?php echo $sidebar; ?></div>
-      <content class="col-sm-10">
-          <div><?php echo $content; ?></div>
-      </content>
+    <div class="col-sm-2"><?php echo $sidebar; ?></div>
+    <content class="col-sm-10">
+        <div><?php echo $content; ?></div>
+    </content>
 </div>
 
 <?php include SITE_ROOT . '/views/layouts/partials/footer.tpl.php' ?>
