@@ -21,22 +21,24 @@
     padding: 2px;
 }
 
-.center-div{
+.center-div {
     display: flex;
     padding-top: 5%;
     flex-direction: column;
 }
 
-.form-register, .form-login{
+.form-register,
+.form-login {
     width: 50%;
     margin: 0 auto;
 }
 
-.form-register ul, .form-login ul{
+.form-register ul,
+.form-login ul {
     list-style-type: none;
 }
 
-.messages .alert{
+.messages .alert {
     padding: 5px;
     border-radius: 0px;
     border: none;

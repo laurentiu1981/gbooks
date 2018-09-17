@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-use models\User;
+use models\UserModel;
 
 class UserAuthenticationController extends BasicController
 {
@@ -32,12 +32,11 @@ class UserAuthenticationController extends BasicController
       $email = $_POST['email'];
       $password = $_POST['password'];
       $passwordConfirmation = $_POST['confirm-password'];
-      $db = db_get_connection();
-      $user = new User();
+      $user = new UserModel();
       if ($user->isRegistrationValid($email, $password, $passwordConfirmation)) {
         $user->createUser($email, $password);
         set_message('User successfully created!', 'status');
-        redirect('/admin');
+        redirect('/login');
       }
     }
     $this->registerPageAction();
@@ -61,9 +60,10 @@ class UserAuthenticationController extends BasicController
     if (isset($_POST['email']) && isset($_POST['password'])) {
       $email = $_POST['email'];
       $password = $_POST['password'];
-      $db = db_get_connection();
-      $user = new User();
-      if ($user->areValidCredentials($email, $password)) {
+      $userModel = new UserModel();
+      if ($userModel->areValidCredentials($email, $password)) {
+        $user = $userModel->loadByEmail($email);
+        $user->updateSession();
         set_message('Logged in successfully!', 'status');
         redirect('/admin');
       }

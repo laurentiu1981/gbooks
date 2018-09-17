@@ -2,7 +2,9 @@
 
 namespace models;
 
-class User extends BasicModel
+use Entities\UserEntity;
+
+class UserModel extends BasicModel
 {
 
   public function __construct()
@@ -26,6 +28,26 @@ class User extends BasicModel
       $data = array($email, $password);
       $this->executeStatement($sql, $data);
     }
+  }
+
+  /**
+   * Loads user entity.
+   *
+   * @param string $email
+   *    User email.
+   *
+   * @return UserEntity
+   */
+  public function loadByEmail($email)
+  {
+    $sql = "SELECT * FROM users WHERE email = ?";
+    $data = array($email);
+    $statement = $this->executeStatement($sql, $data);
+    $row = $statement->fetchObject();
+    return new UserEntity(array(
+      'user_id' => $row->user_id,
+      'email' => $row->email
+    ));
   }
 
   /**
