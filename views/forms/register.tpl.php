@@ -1,7 +1,7 @@
 <div class="center-div">
     <form method="post" class="form-horizontal">
         <div class="messages">
-					<?php echo $message;?>
+			<?php echo $message;?>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-4" for="email">E-mail:</label>
