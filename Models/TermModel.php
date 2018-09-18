@@ -13,6 +13,13 @@ class TermModel extends BasicModel
     parent::__construct();
   }
 
+  /**
+   * Save term.
+   *
+   * @param TermEntity $term
+   *
+   * @return bool
+   */
   function save($term)
   {
     if (is_null($term->getVid())) {
@@ -21,10 +28,10 @@ class TermModel extends BasicModel
       $statement = $this->executeStatement($sql, $data);
       $term->setVid($statement->fetchObject()->vid);
     }
-    $id = $term->getTid();
-    if (isset($id)) {
-      $sql = 'UPDATE terms SET vid=?, name=? WHERE id=?';
-      $data = array($term->getVid(), $term->getName(), $id);
+    $tid = $term->getTid();
+    if (isset($tid)) {
+      $sql = 'UPDATE terms SET vid=?, name=? WHERE tid=?';
+      $data = array($term->getVid(), $term->getName(), $tid);
       $statement = $this->executeStatement($sql, $data);
     } else {
       $sql = 'INSERT INTO terms (vid, name) VALUES (?, ?)';
@@ -36,20 +43,22 @@ class TermModel extends BasicModel
   }
 
   /**
-   * @param int $id
+   * Get term by id.
+   *
+   * @param int $tid
    *
    * @return TermEntity
    */
-  function get($id)
+  function get($tid)
   {
-    $sql = 'SELECT id,vid,name FROM terms WHERE id=?';
-    $data = array($id);
+    $sql = 'SELECT tid,vid,name FROM terms WHERE tid=?';
+    $data = array($tid);
     $statement = $this->executeStatement($sql, $data);
     $row = $statement->fetchObject();
     $term = NULL;
     if ($row) {
       $term = new TermEntity(array(
-        "tid" => $id,
+        "tid" => $tid,
         "vid" => $row->vid,
         "name" => $row->name,
       ));
@@ -58,9 +67,10 @@ class TermModel extends BasicModel
   }
 
   /**
+   * Find a term by vocabulary and name.
+   *
    * @param string $vocabulary
    *    vocabulary name
-   *
    * @param string $name
    *    term name
    *
@@ -68,7 +78,7 @@ class TermModel extends BasicModel
    */
   function findByVocabularyAndName($vocabulary, $name)
   {
-    $sql = 'SELECT T.id,T.vid,T.name,V.vocabulary 
+    $sql = 'SELECT T.tid,T.vid,T.name,V.vocabulary 
             FROM terms AS T INNER JOIN vocabulary AS V ON T.vid=V.vid 
             WHERE V.vocabulary LIKE ? AND T.name LIKE ? ';
     $data = array($vocabulary, $name);
@@ -77,7 +87,7 @@ class TermModel extends BasicModel
     $term = NULL;
     if ($row) {
       $term = new TermEntity(array(
-        "tid" => $row->id,
+        "tid" => $row->tid,
         "vid" => $row->vid,
         "vocabulary" => $row->vocabulary,
         "name" => $row->name,

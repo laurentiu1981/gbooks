@@ -12,7 +12,7 @@ CREATE TABLE vocabulary (
  );
 INSERT INTO vocabulary (vid, vocabulary) VALUES (NULL, 'authors'), (NULL, 'categories');
 CREATE TABLE terms (
-  id INT NOT NULL AUTO_INCREMENT ,
+  tid INT NOT NULL AUTO_INCREMENT ,
   vid INT,  name VARCHAR(64) NOT NULL UNIQUE ,
   PRIMARY KEY  (id)
  );

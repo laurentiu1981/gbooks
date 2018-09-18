@@ -52,8 +52,7 @@ class TermEntity
   /**
    * setter for $vid
    *
-   * @param int
-   *    $vid
+   * @param int $vid
    */
   public function setVid($vid)
   {
