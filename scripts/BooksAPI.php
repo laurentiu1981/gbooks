@@ -20,8 +20,8 @@ class BooksAPI
   /**
    * Collect all data
    *
-   * @return string
-   *   url.
+   * @return array
+   *   array of books.
    */
   function getBooks()
   {

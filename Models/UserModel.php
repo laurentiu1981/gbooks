@@ -1,6 +1,6 @@
 <?php
 
-namespace models;
+namespace Models;
 
 use Entities\UserEntity;
 
@@ -24,9 +24,11 @@ class UserModel extends BasicModel
   {
     $permission = $this->isEmailUnique($email);
     if ($permission) {
-      $sql = "INSERT INTO users ( email, password ) VALUES( ?, MD5(?) )";
-      $data = array($email, $password);
-      $this->executeStatement($sql, $data);
+      $query = $this->dsql_connection->dsql();
+      $result = $query->table('users')
+        ->set('email', $email)
+        ->set('password', MD5($password))
+        ->insert();
     }
   }
 
@@ -40,13 +42,13 @@ class UserModel extends BasicModel
    */
   public function loadByEmail($email)
   {
-    $sql = "SELECT * FROM users WHERE email = ?";
-    $data = array($email);
-    $statement = $this->executeStatement($sql, $data);
-    $row = $statement->fetchObject();
+    $query = $this->dsql_connection->dsql();
+    $result = $query->table('users')
+      ->where('email', '=', $email)
+      ->getRow();
     return new UserEntity(array(
-      'user_id' => $row->user_id,
-      'email' => $row->email
+      'user_id' => $result['user_id'],
+      'email' => $result['email']
     ));
   }
 
@@ -61,11 +63,11 @@ class UserModel extends BasicModel
    */
   public function isEmailUnique($email)
   {
-    $sql = "SELECT email FROM users WHERE email = ?";
-    $data = array($email);
-    $this->executeStatement($sql, $data);
-    $statement = $this->executeStatement($sql, $data);
-    return ($statement->rowCount() === 0);
+    $query = $this->dsql_connection->dsql();
+    $result = $query->table('users')
+      ->where('email', '=', $email)
+      ->getRow();
+    return empty($result);
   }
 
   /**
@@ -118,11 +120,13 @@ class UserModel extends BasicModel
    */
   public function areValidCredentials($email, $password)
   {
-    $sql = "SELECT email FROM users WHERE email = ? AND password = MD5(?)";
-    $data = array($email, $password);
-    $statement = $this->executeStatement($sql, $data);
+    $query = $this->dsql_connection->dsql();
+    $result = $query->table('users')
+      ->where('email', '=', $email)
+      ->where('password', '=', MD5($password))
+      ->get();
     $messages = array();
-    if ($statement->rowCount() !== 1) {
+    if (sizeof($result) !== 1) {
       $messages[] = 'Invalid username and password.';
     }
     set_error_messages($messages);
