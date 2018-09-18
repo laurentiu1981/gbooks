@@ -7,6 +7,7 @@ if (!empty($_SERVER['REQUEST_URI'])) {
 
 // Local includes
 include SITE_ROOT . '/includes/autoload.php';
+include SITE_ROOT . '/vendor/autoload.php';
 include SITE_ROOT . '/includes/config.php';
 include SITE_ROOT . '/includes/db.php';
 include SITE_ROOT . '/includes/helpers.php';

@@ -8,6 +8,7 @@ class BasicModel
   public function __construct()
   {
     $this->db = db_get_connection();
+    $this->dsql_connection = db_get_dsql_connection();
   }
 
   /**
