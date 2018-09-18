@@ -14,7 +14,7 @@ INSERT INTO vocabulary (vid, vocabulary) VALUES (NULL, 'authors'), (NULL, 'categ
 CREATE TABLE terms (
   tid INT NOT NULL AUTO_INCREMENT ,
   vid INT,  name VARCHAR(64) NOT NULL UNIQUE ,
-  PRIMARY KEY  (id)
+  PRIMARY KEY  (tid)
  );
 CREATE TABLE field_authors (
   entity_id INT ,entity_type VARCHAR(32),
