@@ -72,7 +72,7 @@ class BookEntity
   }
 
   /**
-   * @return int
+   * @return float
    */
   public function getRating()
   {
@@ -80,7 +80,7 @@ class BookEntity
   }
 
   /**
-   * @param int $rating
+   * @param float $rating
    */
   public function setRating($rating)
   {
@@ -152,7 +152,7 @@ class BookEntity
   }
 
   /**
-   * @return int
+   * @return float
    */
   public function getPrice()
   {
@@ -160,7 +160,7 @@ class BookEntity
   }
 
   /**
-   * @param int $price
+   * @param float $price
    */
   public function setPrice($price)
   {
