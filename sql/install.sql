@@ -14,21 +14,16 @@ INSERT INTO vocabulary (vid, vocabulary) VALUES (NULL, 'authors'), (NULL, 'categ
 CREATE TABLE terms (
   id INT NOT NULL AUTO_INCREMENT ,
   vid INT,  name VARCHAR(64) NOT NULL UNIQUE ,
-  FOREIGN KEY (vid) REFERENCES vocabulary(vid),
   PRIMARY KEY  (id)
  );
 CREATE TABLE field_authors (
   entity_id INT ,entity_type VARCHAR(32),
   term_id INT  ,
-  FOREIGN KEY (entity_id) REFERENCES books(id),
-  FOREIGN KEY (term_id) REFERENCES terms(id),
   PRIMARY KEY  (entity_id,entity_type,term_id)
  );
 CREATE TABLE field_categories (
   entity_id INT ,
   entity_type VARCHAR(32),
   term_id INT  ,
-  FOREIGN KEY (entity_id) REFERENCES books(id),
-  FOREIGN KEY (term_id) REFERENCES terms(id),
   PRIMARY KEY  (entity_id,entity_type,term_id)
 );

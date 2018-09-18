@@ -15,19 +15,20 @@ class TermModel extends BasicModel
 
   function save($term)
   {
-    $sql = 'SELECT vid FROM vocabulary WHERE vocabulary LIKE ?';
-    $data = array($term->getVocabulary());
-    $statement = $this->executeStatement($sql, $data);
-    $vocabularyId = $statement->fetchObject()->vid;
-
-    $id = $term->getId();
+    if (is_null($term->getVid())) {
+      $sql = 'SELECT vid FROM vocabulary WHERE vocabulary LIKE ?';
+      $data = array($term->getVocabulary());
+      $statement = $this->executeStatement($sql, $data);
+      $term->setVid($statement->fetchObject()->vid);
+    }
+    $id = $term->getTid();
     if (isset($id)) {
       $sql = 'UPDATE terms SET vid=?, name=? WHERE id=?';
-      $data = array($vocabularyId, $term->getName(), $id);
+      $data = array($term->getVid(), $term->getName(), $id);
       $statement = $this->executeStatement($sql, $data);
     } else {
       $sql = 'INSERT INTO terms (vid, name) VALUES (?, ?)';
-      $data = array($vocabularyId, $term->getName());
+      $data = array($term->getVid(), $term->getName());
       $statement = $this->executeStatement($sql, $data);
     }
     return $statement;
@@ -35,21 +36,21 @@ class TermModel extends BasicModel
   }
 
   /**
-   * @param $id
+   * @param int $id
+   *
    * @return TermEntity
    */
   function get($id)
   {
-
     $sql = 'SELECT id,vid,name FROM terms WHERE id=?';
     $data = array($id);
     $statement = $this->executeStatement($sql, $data);
     $row = $statement->fetchObject();
-    $term=NULL;
+    $term = NULL;
     if ($row) {
       $term = new TermEntity(array(
-        "id" => $id,
-        "vocabulary" => $row->vid,
+        "tid" => $id,
+        "vid" => $row->vid,
         "name" => $row->name,
       ));
     }
@@ -57,48 +58,28 @@ class TermModel extends BasicModel
   }
 
   /**
-   * @param $name
+   * @param string $vocabulary
+   *    vocabulary name
+   *
+   * @param string $name
+   *    term name
+   *
    * @return TermEntity
    */
-  function findByName($name)
+  function findByVocabularyAndName($vocabulary, $name)
   {
-    $sql = 'SELECT id,vid,name FROM terms WHERE name LIKE ?';
-    $data = array($name);
+    $sql = 'SELECT T.id,T.vid,T.name,V.vocabulary 
+            FROM terms AS T INNER JOIN vocabulary AS V ON T.vid=V.vid 
+            WHERE V.vocabulary LIKE ? AND T.name LIKE ? ';
+    $data = array($vocabulary, $name);
     $statement = $this->executeStatement($sql, $data);
     $row = $statement->fetchObject();
-    $term=NULL;
+    $term = NULL;
     if ($row) {
       $term = new TermEntity(array(
-        "id" => $row->id,
-        "vocabulary" => $row->vid,
-        "name" => $row->name,
-      ));
-    }
-    return $term;
-  }
-
-  /**
-   * @param $vocabulary
-   * @return TermEntity
-   */
-  function findByVocabularyAndName($vocabulary,$name)
-  {
-
-    $sql = 'SELECT vid FROM vocabulary WHERE vocabulary LIKE ?';
-    $data = array($vocabulary);
-    $statement = $this->executeStatement($sql, $data);
-    $vocabularyId = $statement->fetchObject()->vid;
-
-
-    $sql = 'SELECT id,vid,name FROM terms WHERE vid LIKE ? AND name LIKE ? ';
-    $data = array($vocabularyId,$name);
-    $statement = $this->executeStatement($sql, $data);
-    $row = $statement->fetchObject();
-    $term=NULL;
-    if ($row) {
-      $term = new TermEntity(array(
-        "id" => $row->id,
-        "vocabulary" => $row->vid,
+        "tid" => $row->id,
+        "vid" => $row->vid,
+        "vocabulary" => $row->vocabulary,
         "name" => $row->name,
       ));
     }
