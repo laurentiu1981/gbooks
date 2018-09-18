@@ -4,7 +4,7 @@ CREATE TABLE users (
   email TEXT,
   password VARCHAR(32),
   PRIMARY KEY (user_id)
-)
+);
 CREATE TABLE vocabulary (
   vid INT NOT NULL AUTO_INCREMENT ,
   vocabulary VARCHAR(32) NOT NULL ,

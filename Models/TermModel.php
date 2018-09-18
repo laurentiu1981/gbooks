@@ -45,14 +45,14 @@ class TermModel extends BasicModel
     $data = array($id);
     $statement = $this->executeStatement($sql, $data);
     $row = $statement->fetchObject();
+    $term=NULL;
     if ($row) {
       $term = new TermEntity(array(
         "id" => $id,
         "vocabulary" => $row->vid,
         "name" => $row->name,
       ));
-    } else
-      $term = new TermEntity(array());
+    }
     return $term;
   }
 
@@ -66,14 +66,14 @@ class TermModel extends BasicModel
     $data = array($name);
     $statement = $this->executeStatement($sql, $data);
     $row = $statement->fetchObject();
+    $term=NULL;
     if ($row) {
       $term = new TermEntity(array(
         "id" => $row->id,
         "vocabulary" => $row->vid,
         "name" => $row->name,
       ));
-    } else
-      $term = new TermEntity(array());
+    }
     return $term;
   }
 
@@ -81,7 +81,7 @@ class TermModel extends BasicModel
    * @param $vocabulary
    * @return TermEntity
    */
-  function findByVocabulary($vocabulary)
+  function findByVocabularyAndName($vocabulary,$name)
   {
 
     $sql = 'SELECT vid FROM vocabulary WHERE vocabulary LIKE ?';
@@ -90,18 +90,18 @@ class TermModel extends BasicModel
     $vocabularyId = $statement->fetchObject()->vid;
 
 
-    $sql = 'SELECT id,vid,name FROM terms WHERE vid LIKE ?';
-    $data = array($vocabularyId);
+    $sql = 'SELECT id,vid,name FROM terms WHERE vid LIKE ? AND name LIKE ? ';
+    $data = array($vocabularyId,$name);
     $statement = $this->executeStatement($sql, $data);
     $row = $statement->fetchObject();
+    $term=NULL;
     if ($row) {
       $term = new TermEntity(array(
         "id" => $row->id,
         "vocabulary" => $row->vid,
         "name" => $row->name,
       ));
-    } else
-      $term = new TermEntity(array());
+    }
     return $term;
   }
 }
