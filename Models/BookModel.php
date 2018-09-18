@@ -7,7 +7,6 @@ use Entities\BookEntity;
 class BookModel extends BasicModel
 {
 
-
   public function __construct()
   {
     parent::__construct();
@@ -15,10 +14,10 @@ class BookModel extends BasicModel
 
 
   /**
+   * Get a book by id.
    *
-   * Get a book by id
+   * @param int $id
    *
-   * @param $id
    * @return BookEntity|null
    */
   public function get($id)
@@ -47,10 +46,11 @@ class BookModel extends BasicModel
   }
 
   /**
+   * Creates a book into books table.
    *
-   * Creates a book into books table
+   * @param BookEntity $book
+   *   Book object.
    *
-   * @param $book
    * @return bool
    */
   public function save($book)
@@ -64,7 +64,9 @@ class BookModel extends BasicModel
   /**
    * Find a book by title
    *
-   * @param $title
+   * @param string $title
+   *   Book's title.
+   *
    * @return BookEntity|null
    */
   public function find($title)

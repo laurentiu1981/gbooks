@@ -19,6 +19,6 @@ CREATE TABLE books (
   language VARCHAR(32),
   price DECIMAL(10, 2),
   currency VARCHAR(32),
-  buy_link - VARCHAR(255),
+  buy_link VARCHAR(255),
   PRIMARY KEY (id)
-)
+);
