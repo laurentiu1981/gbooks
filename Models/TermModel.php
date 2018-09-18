@@ -3,6 +3,7 @@
 namespace Models;
 
 
+use atk4\dsql\Expression;
 use Entities\TermEntity;
 
 class TermModel extends BasicModel
@@ -18,27 +19,36 @@ class TermModel extends BasicModel
    *
    * @param TermEntity $term
    *
-   * @return bool
+   * @return array|\atk4\dsql\PDOStatement
+   *
+   * @throws \atk4\dsql\Exception
    */
   function save($term)
   {
+
     if (is_null($term->getVid())) {
-      $sql = 'SELECT vid FROM vocabulary WHERE vocabulary LIKE ?';
-      $data = array($term->getVocabulary());
-      $statement = $this->executeStatement($sql, $data);
-      $term->setVid($statement->fetchObject()->vid);
+      $query = $this->dsql_connection->dsql();
+      $result = $query->table('vocabulary')
+        ->where('vocabulary', '=', $term->getVocabulary())
+        ->getRow();
+      $term->setVid($result['vid']);
     }
     $tid = $term->getTid();
     if (isset($tid)) {
-      $sql = 'UPDATE terms SET vid=?, name=? WHERE tid=?';
-      $data = array($term->getVid(), $term->getName(), $tid);
-      $statement = $this->executeStatement($sql, $data);
+      $query = $this->dsql_connection->dsql();
+      $result = $query->table('terms')
+        ->set('vid', $term->getVid())
+        ->set('name', $term->getName())
+        ->where("tid", "=", $tid)
+        ->update();
     } else {
-      $sql = 'INSERT INTO terms (vid, name) VALUES (?, ?)';
-      $data = array($term->getVid(), $term->getName());
-      $statement = $this->executeStatement($sql, $data);
+      $query = $this->dsql_connection->dsql();
+      $result = $query->table('terms')
+        ->set('vid', $term->getVid())
+        ->set('name', $term->getName())
+        ->insert();
     }
-    return $statement;
+    return $result;
 
   }
 
@@ -48,21 +58,23 @@ class TermModel extends BasicModel
    * @param int $tid
    *
    * @return TermEntity
+   * @throws \atk4\dsql\Exception
    */
   function get($tid)
   {
-    $sql = 'SELECT tid,vid,name FROM terms WHERE tid=?';
-    $data = array($tid);
-    $statement = $this->executeStatement($sql, $data);
-    $row = $statement->fetchObject();
+    $query = $this->dsql_connection->dsql();
+    $result = $query->table('terms')
+      ->where('tid', '=', $tid)
+      ->getRow();
     $term = NULL;
-    if ($row) {
+    if ($result) {
       $term = new TermEntity(array(
-        "tid" => $tid,
-        "vid" => $row->vid,
-        "name" => $row->name,
+        "tid" => $result['tid'],
+        "vid" => $result['vid'],
+        "name" => $result['name']
       ));
     }
+
     return $term;
   }
 
@@ -75,22 +87,25 @@ class TermModel extends BasicModel
    *    term name
    *
    * @return TermEntity
+   *
+   * @throws \atk4\dsql\Exception
    */
   function findByVocabularyAndName($vocabulary, $name)
   {
-    $sql = 'SELECT T.tid,T.vid,T.name,V.vocabulary 
-            FROM terms AS T INNER JOIN vocabulary AS V ON T.vid=V.vid 
-            WHERE V.vocabulary LIKE ? AND T.name LIKE ? ';
-    $data = array($vocabulary, $name);
-    $statement = $this->executeStatement($sql, $data);
-    $row = $statement->fetchObject();
+    $query = $this->dsql_connection->dsql();
+    $result = $query
+      ->table('terms', 't')
+      ->join('vocabulary v', new Expression("t.vid=v.vid"), "inner")
+      ->where('v.vocabulary', "LIKE", $vocabulary)
+      ->where('t.name', "LIKE", $name)
+      ->getRow();
     $term = NULL;
-    if ($row) {
+    if ($result) {
       $term = new TermEntity(array(
-        "tid" => $row->tid,
-        "vid" => $row->vid,
-        "vocabulary" => $row->vocabulary,
-        "name" => $row->name,
+        "tid" => $result['tid'],
+        "vid" => $result['vid'],
+        "name" => $result['name'],
+        "vocabulary" => $result['vocabulary']
       ));
     }
     return $term;
