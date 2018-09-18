@@ -1,8 +1,8 @@
-#GBOOKS
+# GBOOKS
 
-##Install
+## Install
 
-1. git clone [git@github.com](https://github.com/):laurentiu1981@gbooks.git
+1. `git clone git@github.com:laurentiu1981@gbooks.git`
 2. cd gbooks
 3. in vhosts add new VirtualHost
     ```
