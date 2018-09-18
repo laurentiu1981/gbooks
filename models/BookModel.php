@@ -1,6 +1,6 @@
 <?php
 
-namespace models;
+namespace Models;
 
 use Entities\BookEntity;
 
@@ -13,6 +13,14 @@ class BookModel extends BasicModel
     parent::__construct();
   }
 
+
+  /**
+   *
+   * Get a book by id
+   *
+   * @param $id
+   * @return BookEntity|null
+   */
   public function get($id)
   {
     $sql = "SELECT * FROM books WHERE id = ?";
@@ -38,6 +46,13 @@ class BookModel extends BasicModel
     return $book;
   }
 
+  /**
+   *
+   * Creates a book into books table
+   *
+   * @param $book
+   * @return bool
+   */
   public function save($book)
   {
     $sql = "INSERT INTO books (title, description, rating, ISBN_13, ISBN_10, image, language, price, currency, buy_link) VALUES (?,?,?,?,?,?,?,?,?,?)";
@@ -46,6 +61,12 @@ class BookModel extends BasicModel
     return $statement;
   }
 
+  /**
+   * Find a book by title
+   *
+   * @param $title
+   * @return BookEntity|null
+   */
   public function find($title)
   {
     $sql = "SELECT * FROM books WHERE title = ?";
