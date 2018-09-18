@@ -5,22 +5,32 @@
  *
  * @return array
  */
-function gbooks_routes_definitions() {
+function gbooks_routes_definitions()
+{
   return array(
     '/home' => array(
       'GET' => 'Controllers\HomeController::homepageAction',
     ),
     '/' => 'Controllers\HomeController::homepageAction',
-    '/admin'=> array(
+    '/admin' => array(
       'GET' => 'Controllers\AdminController::adminpageAction',
-    )
+    ),
+    '/register' => array(
+      'GET' => 'Controllers\UserAuthenticationController::registerPageAction',
+      'POST' => 'Controllers\UserAuthenticationController::registerPost',
+    ),
+    '/login' => array(
+      'GET' => 'Controllers\UserAuthenticationController::loginPageAction',
+      'POST' => 'Controllers\UserAuthenticationController::loginPost',
+    ),
   );
 }
 
 /**
  * Route handler callback.
  */
-function gbooks_routes_execute_handler() {
+function gbooks_routes_execute_handler()
+{
 
   $routes = gbooks_routes_definitions();
   $request_method = strtoupper($_SERVER['REQUEST_METHOD']);
@@ -33,8 +43,7 @@ function gbooks_routes_execute_handler() {
     if (is_array($routeDefinition) && isset($routeDefinition[$request_method])) {
       $routeParts = explode('::', $routeDefinition[$request_method]);
 
-    }
-    else {
+    } else {
       $routeParts = explode('::', $routeDefinition);
     }
 
@@ -49,9 +58,7 @@ function gbooks_routes_execute_handler() {
   if ($controllerClass) {
     $controller = new $controllerClass();
     $controller->{$controllerAction}();
-  }
-
-  else {
+  } else {
     echo '404 not found';
   }
 

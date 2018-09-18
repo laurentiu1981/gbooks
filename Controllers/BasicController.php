@@ -2,9 +2,11 @@
 
 namespace Controllers;
 
-class BasicController {
+class BasicController
+{
 
-  public function __construct() {
+  public function __construct()
+  {
     $this->title = '';
     $this->css = '';
     $this->content = '';
@@ -14,7 +16,8 @@ class BasicController {
   /**
    * Default action for any route.
    */
-  public function get() {
+  public function get()
+  {
     $this->content = 'Content for Basic Controller';
     $this->renderLayout('/views/layouts/basic.tpl.php');
   }
@@ -45,7 +48,8 @@ class BasicController {
    * @return array
    *   Controller layout variables.
    */
-  public function getLayoutVars() {
+  public function getLayoutVars()
+  {
     return array(
       'title' => $this->title,
       'css' => $this->css,
