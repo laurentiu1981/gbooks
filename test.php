@@ -2,16 +2,15 @@
 
 
 use Entities\TermEntity;
-use Entities\TermModel;
+use Models\TermModel;
 
 define('SITE_ROOT', getcwd());
 include_once(SITE_ROOT . '/includes/bootstrap.php');
-
 $termModel = new TermModel();
 
-$term = new TermEntity(array("id" => 3, "vocabulary" => "categories", "name" => "Fiction"));
+$term = new TermEntity(array( "vocabulary" => "categories", "name" => "Science"));
 $termModel->save($term);
 
-$term1 = $termModel->findByName("jj");
+$term1 = $termModel->get(4);
 
 print_r($term1);
