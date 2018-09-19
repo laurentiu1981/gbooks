@@ -19,7 +19,7 @@ function db_get_connection()
 /**
  * Gets DSQL connection.
  *
- * @return \atk4\dsql\Query
+ * @return \atk4\dsql\Connection
  */
 function db_get_dsql_connection()
 {
@@ -28,6 +28,5 @@ function db_get_dsql_connection()
   $username = $conf['database']['user'];
   $password = $conf['database']['password'];
   $db = atk4\dsql\Connection::connect($dsn, $username, $password);
-  $query = $db->dsql();
-  return $query;
+  return $db;
 }

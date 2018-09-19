@@ -15,6 +15,8 @@ class BookEntity
   private $price;
   private $currency;
   private $buy_link;
+  private $authorsIds;
+  private $categoriesIds;
 
   public function __construct($params)
   {
@@ -197,6 +199,20 @@ class BookEntity
   public function setBuyLink($buy_link)
   {
     $this->buy_link = $buy_link;
+  }
+
+  /**
+   * @return array
+   */
+  public function getAuthorsIds() {
+    return isset($this->authorsIds) ? $this->authorsIds : array();
+  }
+
+  /**
+   * @return array
+   */
+  public function getCategoriesIds() {
+    return isset($this->categoriesIds) ? $this->categoriesIds : array();
   }
 
 }
