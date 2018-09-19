@@ -12,7 +12,6 @@ class BookModel extends BasicModel
     parent::__construct();
   }
 
-
   /**
    * Get a book by id.
    *
@@ -20,29 +19,29 @@ class BookModel extends BasicModel
    *
    * @return BookEntity|null
    */
-  public function get($id)
+  function get($id)
   {
-    $sql = "SELECT * FROM books WHERE id = ?";
-    $data = array($id);
-    $statement = $this->executeStatement($sql, $data);
-    $row = $statement->fetchObject();
+    $query = $this->dsql_connection->dsql();
+    $result = $query->table('books')
+      ->where('id', '=', $id)
+      ->getRow();
     $book = NULL;
-    if ($row) {
+    if ($result) {
       $book = new BookEntity(array(
-        'id' => $row->id,
-        'title' => $row->title,
-        'description' => $row->description,
-        'rating' => $row->rating,
-        'ISBN_13' => $row->ISBN_13,
-        'ISBN_10' => $row->ISBN_10,
-        'image' => $row->image,
-        'language' => $row->language,
-        'price' => $row->price,
-        'currency' => $row->currency,
-        'buy_link' => $row->buy_link
+        "id" => $result['id'],
+        "title" => $result['title'],
+        "description" => $result['description'],
+        "rating" => $result['rating'],
+        "ISBN_13" => $result['ISBN_13'],
+        "ISBN_10" => $result['ISBN_10'],
+        "image" => $result['image'],
+        "language" => $result['language'],
+        "price" => $result['price'],
+        "currency" => $result['currency'],
+        "buy_link" => $result['buy_link']
       ));
+      return $book;
     }
-    return $book;
   }
 
   /**
@@ -53,12 +52,22 @@ class BookModel extends BasicModel
    *
    * @return bool
    */
-  public function save($book)
+  function save($book)
   {
-    $sql = "INSERT INTO books (title, description, rating, ISBN_13, ISBN_10, image, language, price, currency, buy_link) VALUES (?,?,?,?,?,?,?,?,?,?)";
-    $data = array($book->getTitle(), $book->getDescription(), $book->getRating(), $book->getISBN13(), $book->getISBN10(), $book->getImage(), $book->getLanguage(), $book->getPrice(), $book->getCurrency(), $book->getBuyLink());
-    $statement = $this->executeStatement($sql, $data);
-    return $statement;
+    $query = $this->dsql_connection->dsql();
+    $result = $query->table('books')
+      ->set('title', $book->getTitle())
+      ->set('description', $book->getDescription())
+      ->set('rating', $book->getRating())
+      ->set('ISBN_13', $book->getISBN13())
+      ->set('ISBN_10', $book->getISBN10())
+      ->set('image', $book->getImage())
+      ->set('language', $book->getLanguage())
+      ->set('price', $book->getPrice())
+      ->set('currency', $book->getCurrency())
+      ->set('buy_link', $book->getBuyLink())
+      ->insert();
+    return $result;
   }
 
   /**
@@ -69,29 +78,29 @@ class BookModel extends BasicModel
    *
    * @return BookEntity|null
    */
-  public function find($title)
+  function find($title)
   {
-    $sql = "SELECT * FROM books WHERE title = ?";
-    $data = array($title);
-    $statement = $this->executeStatement($sql, $data);
-    $row = $statement->fetchObject();
+    $query = $this->dsql_connection->dsql();
+    $result = $query
+      ->table('books')
+      ->where('title', "=", $title)
+      ->getRow();
     $book = NULL;
-    if ($row) {
+    if ($result) {
       $book = new BookEntity(array(
-        'id' => $row->id,
-        'title' => $row->title,
-        'description' => $row->description,
-        'rating' => $row->rating,
-        'ISBN_13' => $row->ISBN_13,
-        'ISBN_10' => $row->ISBN_10,
-        'image' => $row->image,
-        'language' => $row->language,
-        'price' => $row->price,
-        'currency' => $row->currency,
-        'buy_link' => $row->buy_link
+        "id" => $result['id'],
+        "title" => $result['title'],
+        "description" => $result['description'],
+        "rating" => $result['rating'],
+        "ISBN_13" => $result['ISBN_13'],
+        "ISBN_10" => $result['ISBN_10'],
+        "image" => $result['image'],
+        "language" => $result['language'],
+        "price" => $result['price'],
+        "currency" => $result['currency'],
+        "buy_link" => $result['buy_link']
       ));
     }
     return $book;
   }
-
 }
