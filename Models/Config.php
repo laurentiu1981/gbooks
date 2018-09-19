@@ -2,11 +2,11 @@
 
 namespace Models;
 
-class Config
+class Config extends BasicModel
 {
   public function __construct()
   {
-    $this->dsql_connection = db_get_dsql_connection();
+    parent::__construct();
   }
 
   /**
@@ -46,19 +46,20 @@ class Config
    *
    * @param string $name
    *      Configuration name.
+   * @param string $default
+   *      Default value for configuration.
    *
    * @return string
    *     The value of the requested configuration.
-   *
    * @throws \atk4\dsql\Exception
    */
-  public function get($name)
+  public function get($name, $default = NULL)
   {
     $query = $this->dsql_connection->dsql();
     $result = $query->table('configuration')
       ->where('name', '=', $name)
       ->getRow();
-    $value = NULL;
+    $value = $default;
     if ($result) {
       $value = unserialize($result['value']);
     }
@@ -68,13 +69,13 @@ class Config
   /**
    * Save multiple configurations.
    *
-   * @param array $array
+   * @param array $variables
    *
    * @throws \atk4\dsql\Exception
    */
-  public function setMultiple($array)
+  public function setMultiple($variables)
   {
-    foreach ($array as $key => $value) {
+    foreach ($variables as $key => $value) {
       $this->set($key, $value);
     }
   }
@@ -82,18 +83,17 @@ class Config
   /**
    * Check if configurations are valid.
    *
-   * @param string $googleApi
-   * @param int $maxBooks
+   * @param
    *
    * @return bool
    */
-  public function isConfigValid($googleApi, $maxBooks)
+  public function isConfigValid($variables)
   {
     $messages = array();
-    if (filter_var($googleApi, FILTER_VALIDATE_URL) === FALSE) {
+    if (filter_var($variables['google_api'], FILTER_VALIDATE_URL) === FALSE) {
       $messages[] = 'Invalid Google Api Endpoint.';
     }
-    if (filter_var($maxBooks, FILTER_VALIDATE_INT) === FALSE || $maxBooks < 0) {
+    if (filter_var($variables['max_books'], FILTER_VALIDATE_INT) === FALSE || $variables['max_books'] < 0) {
       $messages[] = 'Invalid Default Max books results per page.';
     }
     set_error_messages($messages);

@@ -31,8 +31,7 @@ class AdminController extends BasicController
     $message = render_messages(get_messages());
     $config = new Config();
     $gAPI = $config->get("google_api_endpoint");
-    $maxBook = $config->get("customer_default_max_books_results_per_page");
-    if(is_null($maxBook)) $maxBook=10;
+    $maxBook = $config->get("customer_default_max_books_results_per_page", 10);
     $this->content = $this->render('/views/forms/admin_config_form.tpl.php', array('message' => $message, 'gAPI' => $gAPI, "maxBook" => $maxBook));
     $this->renderLayout('/views/layouts/basic.tpl.php');
   }
@@ -44,9 +43,9 @@ class AdminController extends BasicController
   {
     if (isset($_POST['google_api']) && isset($_POST['max_books'])) {
       $config = new Config();
-      if ($config->isConfigValid($_POST['google_api'],$_POST['max_books'])) {
-        $config->setMultiple(array("google_api_endpoint"=> $_POST['google_api'],
-            "customer_default_max_books_results_per_page"=> $_POST['max_books']));
+      if ($config->isConfigValid($_POST)) {
+        $config->setMultiple(array("google_api_endpoint" => $_POST['google_api'],
+          "customer_default_max_books_results_per_page" => $_POST['max_books']));
         set_message('Configurations successfully saved!', 'status');
         redirect('/admin/settings');
       }
