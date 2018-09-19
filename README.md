@@ -30,9 +30,13 @@
       'port' => '3306',
     );
     ```
-10. run script for import the data `php books_script.php <category> <author>`
+## Import books
+    Run script for import books `php books_script.php <category> <author>`
+    You must enter at least one argument and maximum two.
     Examples:
-    `php books_script.php "Fiction"`
-    `php books_script.php "Fiction" ""`
-    `php books_script.php "Fiction" "Frank Herbert"`
+    ```
+     php books_script.php "Fiction"
+     php books_script.php "Fiction" ""
+     php books_script.php "Fiction" "Frank Herbert"
+    ```
   
