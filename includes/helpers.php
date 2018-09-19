@@ -124,8 +124,11 @@ function messages_bootstrap_classes()
 function get_session_user()
 {
   global $user;
-  if (isset($_SESSION)) {
-    return $user;
+  if (!isset($_SESSION)) {
+    session_start();
   }
-  return null;
+  if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+  }
+  return !empty($user) ? $user : NULL;
 }

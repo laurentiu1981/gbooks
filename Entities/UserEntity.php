@@ -50,11 +50,9 @@ class UserEntity
    */
   public function updateSession()
   {
-    global $user;
     if (!isset($_SESSION)) {
       session_start();
     }
     $_SESSION['user'] = $this;
-    $user = $this;
   }
 }
