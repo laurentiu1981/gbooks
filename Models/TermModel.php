@@ -74,7 +74,6 @@ class TermModel extends BasicModel
         "name" => $result['name']
       ));
     }
-
     return $term;
   }
 
