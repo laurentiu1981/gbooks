@@ -30,3 +30,9 @@
       'port' => '3306',
     );
     ```
+10. run script for import the data `php books_script.php <category> <author>`
+    Examples:
+    `php books_script.php "Fiction"`
+    `php books_script.php "Fiction" ""`
+    `php books_script.php "Fiction" "Frank Herbert"`
+  
