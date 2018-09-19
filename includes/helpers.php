@@ -121,9 +121,10 @@ function messages_bootstrap_classes()
  * @return UserEntity $user
  *    If session is set returns user, otherwise returns null.
  */
-function get_session_user(){
+function get_session_user()
+{
   global $user;
-  if (isset($_SESSION)){
+  if (isset($_SESSION)) {
     return $user;
   }
   return null;
