@@ -19,7 +19,7 @@ class BookModel extends BasicModel
    *
    * @return BookEntity|null
    */
-  function get($id)
+  public function get($id)
   {
     $query = $this->dsql_connection->dsql();
     $result = $query->table('books')
@@ -52,7 +52,7 @@ class BookModel extends BasicModel
    *
    * @return bool
    */
-  function save($book)
+  public function save($book)
   {
     $query = $this->dsql_connection->dsql();
     $result = $query->table('books')
@@ -78,7 +78,7 @@ class BookModel extends BasicModel
    *
    * @return BookEntity|null
    */
-  function find($title)
+  public function find($title)
   {
     $query = $this->dsql_connection->dsql();
     $result = $query
