@@ -44,8 +44,10 @@ class AdminController extends BasicController
     if (isset($_POST['google_api']) && isset($_POST['max_books'])) {
       $config = new Config();
       if ($config->isConfigValid($_POST)) {
-        $config->setMultiple(array("google_api_endpoint" => $_POST['google_api'],
-          "customer_default_max_books_results_per_page" => $_POST['max_books']));
+        $config->setMultiple(array(
+          "google_api_endpoint" => $_POST['google_api'],
+          "customer_default_max_books_results_per_page" => intval($_POST['max_books']
+          )));
         set_message('Configurations successfully saved!', 'status');
         redirect('/admin/settings');
       }

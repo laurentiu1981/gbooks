@@ -83,7 +83,7 @@ class Config extends BasicModel
   /**
    * Check if configurations are valid.
    *
-   * @param
+   * @param array $variables
    *
    * @return bool
    */
