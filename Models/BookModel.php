@@ -2,6 +2,7 @@
 
 namespace Models;
 
+use atk4\core\Exception;
 use Entities\BookEntity;
 
 class BookModel extends BasicModel
@@ -55,19 +56,56 @@ class BookModel extends BasicModel
   public function save($book)
   {
     $query = $this->dsql_connection->dsql();
-    $result = $query->table('books')
-      ->set('title', $book->getTitle())
-      ->set('description', $book->getDescription())
-      ->set('rating', $book->getRating())
-      ->set('ISBN_13', $book->getISBN13())
-      ->set('ISBN_10', $book->getISBN10())
-      ->set('image', $book->getImage())
-      ->set('language', $book->getLanguage())
-      ->set('price', $book->getPrice())
-      ->set('currency', $book->getCurrency())
-      ->set('buy_link', $book->getBuyLink())
+    try {
+      $query->table('books')
+        ->set('title', $book->getTitle())
+        ->set('description', $book->getDescription())
+        ->set('rating', $book->getRating())
+        ->set('ISBN_13', $book->getISBN13())
+        ->set('ISBN_10', $book->getISBN10())
+        ->set('image', $book->getImage())
+        ->set('language', $book->getLanguage())
+        ->set('price', $book->getPrice())
+        ->set('currency', $book->getCurrency())
+        ->set('buy_link', $book->getBuyLink())
+        ->insert();
+      $book_id = $this->dsql_connection->lastInsertID();
+
+      //save field_authors
+      foreach($book->getAuthorsIds() as $authorId){
+        $this->saveMapping($book_id, $authorId, 'field_authors');
+      }
+      //save field_categories
+      foreach($book->getCategoriesIds() as $categoryId){
+        $this->saveMapping($book_id, $categoryId, 'field_categories');
+      }
+      return $book_id;
+
+    } catch (Exception $e) {
+
+    }
+
+  }
+
+  /**
+   * Save referenced entities.
+   *
+   * @param int $entity_id
+   *   Book id.
+   * @param int $term_id
+   *   Term id.
+   * @param string $table_name
+   *   Database table name.
+   *
+   * @throws \atk4\dsql\Exception
+   */
+  public function saveMapping($entity_id, $term_id, $table_name){
+    $query = $this->dsql_connection->dsql();
+    $query->table($table_name)
+      ->set('entity_id', $entity_id)
+      ->set('entity_type', 'book')
+      ->set('term_id', $term_id)
       ->insert();
-    return $result;
   }
 
   /**
@@ -77,6 +115,8 @@ class BookModel extends BasicModel
    *   Book's title.
    *
    * @return BookEntity|null
+   *
+   * @throws
    */
   public function find($title)
   {

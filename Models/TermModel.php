@@ -25,7 +25,6 @@ class TermModel extends BasicModel
    */
   function save($term)
   {
-
     if (is_null($term->getVid())) {
       $query = $this->dsql_connection->dsql();
       $result = $query->table('vocabulary')
@@ -36,20 +35,20 @@ class TermModel extends BasicModel
     $tid = $term->getTid();
     if (isset($tid)) {
       $query = $this->dsql_connection->dsql();
-      $result = $query->table('terms')
+      $query->table('terms')
         ->set('vid', $term->getVid())
         ->set('name', $term->getName())
         ->where("tid", "=", $tid)
         ->update();
     } else {
       $query = $this->dsql_connection->dsql();
-      $result = $query->table('terms')
+      $query->table('terms')
         ->set('vid', $term->getVid())
         ->set('name', $term->getName())
         ->insert();
+      $tid = $this->dsql_connection->lastInsertID();
     }
-    return $result;
-
+    return $tid;
   }
 
   /**
@@ -95,8 +94,8 @@ class TermModel extends BasicModel
     $result = $query
       ->table('terms', 't')
       ->join('vocabulary v', new Expression("t.vid=v.vid"), "inner")
-      ->where('v.vocabulary', "LIKE", $vocabulary)
-      ->where('t.name', "LIKE", $name)
+      ->where('v.vocabulary', '=', $vocabulary)
+      ->where('t.name', '=', $name)
       ->getRow();
     $term = NULL;
     if ($result) {

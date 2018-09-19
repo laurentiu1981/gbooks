@@ -1,6 +1,10 @@
 <?php
 
 namespace scripts;
+use Entities\BookEntity;
+use Entities\TermEntity;
+use Models\BookModel;
+use Models\TermModel;
 
 class BooksAPI
 {
@@ -129,6 +133,53 @@ class BooksAPI
     $array = json_decode($json, true);
     curl_close($cSession);
     return $array;
+  }
+
+  /**
+   * Saves each term in authors/categories list into the database if it doesn't already exist.
+   *
+   * @param array $termList
+   *    Array of strings representing author/category names.
+   *
+   * @param string $type
+   *    Type of the terms that are going to be stored into the database: either authors or categories.
+   *
+   * @return array
+   *    Array of term IDs for the authors/categories saved
+   */
+  function saveTerms($termList, $type){
+    $termModel = new TermModel();
+    $termArray = array();
+    if (is_array($termList)) {
+      foreach ($termList as $name) {
+        $term = $termModel->findByVocabularyAndName($type, $name);
+        if ($term === NULL) {
+          $newTerm = new TermEntity(array('vocabulary' => $type, 'name' => $name));
+          $tid = $termModel->save($newTerm);
+          $termArray[] = $tid;
+        }
+        else {
+          $termArray[] = $term->getTid();
+        }
+      }
+    }
+    return $termArray;
+  }
+
+  /**
+   * Saves books into the database.
+   */
+  function saveBooksToDatabase(){
+    $books = $this->getBooks();
+    $bookModel = new BookModel();
+    foreach ($books as $book){
+      $book['authorsIds'] = $this->saveTerms($book['authors'], 'authors');
+      $book['categoriesIds'] = $this->saveTerms($book['categories'], 'categories');
+      unset($book['authors']);
+      unset($book['categories']);
+      $bookEntity = new BookEntity($book);
+      $bookModel->save($bookEntity);
+    }
   }
 
 }

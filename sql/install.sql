@@ -24,13 +24,13 @@ CREATE TABLE books (
 );
 CREATE TABLE vocabulary (
   vid INT NOT NULL AUTO_INCREMENT ,
-  vocabulary VARCHAR(32) NOT NULL ,
+  vocabulary VARCHAR(32) NOT NULL UNIQUE,
   PRIMARY KEY (vid)
  );
 INSERT INTO vocabulary (vid, vocabulary) VALUES (NULL, 'authors'), (NULL, 'categories');
 CREATE TABLE terms (
   tid INT NOT NULL AUTO_INCREMENT ,
-  vid INT,  name VARCHAR(64) NOT NULL UNIQUE ,
+  vid INT,  name VARCHAR(64) NOT NULL,
   PRIMARY KEY  (tid)
  );
 CREATE TABLE field_authors (

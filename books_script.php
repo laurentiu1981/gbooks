@@ -28,5 +28,4 @@ if (isset($argv[2])) {
 
 
 $booksAPI = new BooksAPI($author, $category);
-$books = $booksAPI->getBooks();
-print_r($books);
+$booksAPI->saveBooksToDatabase();
