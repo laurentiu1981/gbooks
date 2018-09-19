@@ -1,5 +1,6 @@
 <?php
 
+global $user;
 
 /**
  * Renders a system default template, which is essentially a PHP template.
@@ -112,4 +113,22 @@ function messages_bootstrap_classes()
     'status' => 'alert alert-success',
     'error' => 'alert alert-warning',
   );
+}
+
+/**
+ * Returns user for current session.
+ *
+ * @return UserEntity $user
+ *    If session is set returns user, otherwise returns null.
+ */
+function get_session_user()
+{
+  global $user;
+  if (!isset($_SESSION)) {
+    session_start();
+  }
+  if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+  }
+  return !empty($user) ? $user : NULL;
 }
