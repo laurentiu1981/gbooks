@@ -44,3 +44,8 @@ CREATE TABLE field_categories (
   term_id INT  ,
   PRIMARY KEY  (entity_id,entity_type,term_id)
 );
+CREATE TABLE configuration (
+  name varchar(255),
+  value LONGBLOB,
+  PRIMARY KEY (name)
+);

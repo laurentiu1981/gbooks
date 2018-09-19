@@ -65,7 +65,7 @@ function set_message($message, $type)
 function set_error_messages($messages)
 {
   foreach ($messages as $message) {
-    set_message($message, 'alert alert-warning');
+    set_message($message, 'error');
   }
 }
 

@@ -23,6 +23,10 @@ function gbooks_routes_definitions()
       'GET' => 'Controllers\UserAuthenticationController::loginPageAction',
       'POST' => 'Controllers\UserAuthenticationController::loginPost',
     ),
+    '/admin/settings' => array(
+      'GET' => 'Controllers\AdminController::adminConfigPageAction',
+      'POST' => 'Controllers\AdminController::adminConfigPostAction',
+    ),
   );
 }
 
