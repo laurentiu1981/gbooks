@@ -40,8 +40,8 @@ class BookModel extends BasicModel
         "currency" => $result['currency'],
         "buy_link" => $result['buy_link']
       ));
+      }
       return $book;
-    }
   }
 
   /**
