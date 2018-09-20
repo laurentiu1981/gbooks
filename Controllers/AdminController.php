@@ -10,7 +10,12 @@ class AdminController extends BasicController
   public function __construct()
   {
     parent::__construct();
+    global $user;
     $this->title = "Admin page";
+    get_session_user();
+    if ($user === NULL) {
+      redirect("/login");
+    }
   }
 
   /**
@@ -18,9 +23,6 @@ class AdminController extends BasicController
    */
   public function adminPageAction()
   {
-    if ($this->userStateClass === "user-logged-out") {
-      redirect("/login");
-    }
     $this->content = $this->render('/views/admin/admin_content.tpl.php');
     $sidebar = $this->render('/views/forms/admin_search_form.tpl.php');
     $this->renderLayout('/views/layouts/sidebar_page.tpl.php', array('sidebar' => $sidebar));

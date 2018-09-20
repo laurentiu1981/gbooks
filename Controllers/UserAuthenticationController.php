@@ -52,6 +52,9 @@ class UserAuthenticationController extends BasicController
     $this->renderLayout('/views/layouts/basic.tpl.php');
   }
 
+  /**
+   * Callback for /logout route.
+   */
   public function logoutPageAction()
   {
     $userModel = new UserModel();
