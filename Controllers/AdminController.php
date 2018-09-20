@@ -12,8 +12,7 @@ class AdminController extends BasicController
     parent::__construct();
     global $user;
     $this->title = "Admin page";
-    get_session_user();
-    if ($user === NULL) {
+    if (empty($user)) {
       redirect("/login");
     }
   }
