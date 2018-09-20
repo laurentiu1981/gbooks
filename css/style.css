@@ -44,3 +44,9 @@
     border: none;
     margin-bottom: 0px;
 }
+
+.user-logged-out .logged-in,
+.user-logged-in .logged-out {
+    display: none;
+}
+

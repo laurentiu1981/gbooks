@@ -1,7 +1,7 @@
 <div class="center-div">
     <form method="post" class="form-horizontal form-register">
         <div class="messages">
-			<?php echo $message;?>
+          <?php echo $messages; ?>
         </div>
         <div class="form-group">
             <label class="control-label col-sm-4" for="email">E-mail:</label>
@@ -19,7 +19,7 @@
             <label class="control-label col-sm-4" for="confirm-password">Confirm password:</label>
             <div class="col-sm-5">
                 <input type='password' class="form-control" name="confirm-password" id="confirm-password"
-                      placeholder="confirm-password"/>
+                       placeholder="confirm-password"/>
             </div>
         </div>
         <div class="from-group">

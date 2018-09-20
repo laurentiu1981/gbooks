@@ -96,14 +96,17 @@ function get_messages()
  */
 function render_messages($messages)
 {
-  $classes = messages_bootstrap_classes();
-  $output = '<ul>';
-  foreach ($messages as $type => $messages_list) {
-    foreach ($messages_list as $message) {
-      $output .= '<li class="' . (isset($classes[$type]) ? $classes[$type] : '') . '">' . $message . '</li>';
+  $output = '';
+  if (!empty($messages)) {
+    $classes = messages_bootstrap_classes();
+    $output .= '<ul>';
+    foreach ($messages as $type => $messages_list) {
+      foreach ($messages_list as $message) {
+        $output .= '<li class="' . (isset($classes[$type]) ? $classes[$type] : '') . '">' . $message . '</li>';
+      }
     }
+    $output .= '</ul>';
   }
-  $output .= '</ul>';
   return $output;
 }
 

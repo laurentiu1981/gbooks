@@ -18,8 +18,8 @@ class UserAuthenticationController extends BasicController
    */
   public function registerPageAction()
   {
-    $message = render_messages(get_messages());
-    $this->content = $this->render('views/forms/register.tpl.php', array('message' => $message));
+    $messages = render_messages(get_messages());
+    $this->content = $this->render('views/forms/register.tpl.php', array('messages' => $messages));
     $this->renderLayout('/views/layouts/basic.tpl.php');
   }
 
@@ -47,9 +47,16 @@ class UserAuthenticationController extends BasicController
    */
   public function loginPageAction()
   {
-    $message = render_messages(get_messages());
-    $this->content = $this->render('views/forms/login.tpl.php', array('message' => $message));
+    $messages = render_messages(get_messages());
+    $this->content = $this->render('views/forms/login.tpl.php', array('messages' => $messages));
     $this->renderLayout('/views/layouts/basic.tpl.php');
+  }
+
+  public function logoutPageAction()
+  {
+    $userModel = new UserModel();
+    $userModel->logout();
+    redirect('/');
   }
 
   /**

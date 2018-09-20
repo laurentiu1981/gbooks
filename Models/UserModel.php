@@ -132,4 +132,15 @@ class UserModel extends BasicModel
     set_error_messages($messages);
     return empty($messages);
   }
+
+  /**
+   * Remove current user from $_SESSION.
+   */
+  public function logout()
+  {
+    if (!isset($_SESSION)) {
+      session_start();
+    }
+    unset($_SESSION['user']);
+  }
 }
