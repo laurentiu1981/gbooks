@@ -23,6 +23,9 @@ function gbooks_routes_definitions()
       'GET' => 'Controllers\UserAuthenticationController::loginPageAction',
       'POST' => 'Controllers\UserAuthenticationController::loginPost',
     ),
+    '/logout' => array(
+      'GET' => 'Controllers\UserAuthenticationController::logoutPageAction',
+    ),
     '/admin/settings' => array(
       'GET' => 'Controllers\AdminController::adminConfigPageAction',
       'POST' => 'Controllers\AdminController::adminConfigPostAction',

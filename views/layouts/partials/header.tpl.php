@@ -10,10 +10,16 @@
             <li><a href="/admin"> Admin</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-            <li>
+            <li class="logged-out">
                 <a href="/login">
                     <span class="glyphicon glyphicon-log-in">
                     </span> Login
+                </a>
+            </li>
+            <li class="logged-in">
+                <a href="/logout">
+                    <span class="glyphicon glyphicon-log-out">
+                    </span> Logout
                 </a>
             </li>
         </ul>

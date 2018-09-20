@@ -10,7 +10,11 @@ class AdminController extends BasicController
   public function __construct()
   {
     parent::__construct();
+    global $user;
     $this->title = "Admin page";
+    if (empty($user)) {
+      redirect("/login");
+    }
   }
 
   /**

@@ -7,10 +7,18 @@ class BasicController
 
   public function __construct()
   {
+    global $user;
     $this->title = '';
     $this->css = '';
     $this->content = '';
     $this->scriptElements = '';
+    $this->messages = render_messages(get_messages());
+    get_session_user();
+    if ($user) {
+      $this->userStateClass = 'user-logged-in';
+    } else {
+      $this->userStateClass = 'user-logged-out';
+    }
   }
 
   /**
@@ -55,6 +63,8 @@ class BasicController
       'css' => $this->css,
       'content' => $this->content,
       'scriptElements' => $this->scriptElements,
+      'userStateClass' => $this->userStateClass,
+      'messages' => $this->messages,
     );
   }
 
