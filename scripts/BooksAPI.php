@@ -99,9 +99,9 @@ class BooksAPI
       }
       $saleInfo = !empty($element['saleInfo']) ? $element['saleInfo'] : array();
       if ($saleInfo) {
-        $bookItem['price'] = !empty($saleInfo['retailPrice']) ? $saleInfo['retailPrice']['amount'] : NULL;
-        $bookItem['currency'] = !empty($saleInfo['retailPrice']) ? $saleInfo['retailPrice']['currencyCode'] : NULL;
-        $bookItem['buyLink'] = !empty($saleInfo['buyLink']) ? $saleInfo['buyLink'] : NULL;
+        $item['price'] = !empty($saleInfo['retailPrice']) ? $saleInfo['retailPrice']['amount'] : NULL;
+        $item['currency'] = !empty($saleInfo['retailPrice']) ? $saleInfo['retailPrice']['currencyCode'] : NULL;
+        $item['buy_link'] = !empty($saleInfo['buyLink']) ? $saleInfo['buyLink'] : NULL;
       }
       $this->resultArray[] = $item;
     }
