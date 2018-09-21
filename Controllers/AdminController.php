@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Models\Config;
+use Models\TermModel;
 
 class AdminController extends BasicController
 {

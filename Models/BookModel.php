@@ -3,6 +3,7 @@
 namespace Models;
 
 use atk4\core\Exception;
+use atk4\dsql\Expression;
 use Entities\BookEntity;
 
 class BookModel extends BasicModel
