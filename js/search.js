@@ -54,7 +54,7 @@
         var messages = [];
         if (priceFrom !== "" && !isNumeric(priceFrom))
             messages.push("From price is not numeric");
-        if (priceFrom !== "" && !isNumeric(priceTo))
+        if (priceTo !== "" && !isNumeric(priceTo))
             messages.push("To price is not numeric");
         if (messages.length === 0)
             return true;
