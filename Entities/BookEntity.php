@@ -17,6 +17,7 @@ class BookEntity
   private $buy_link;
   private $authorsIds;
   private $categoriesIds;
+  private $authors;
 
   public function __construct($params)
   {
@@ -213,6 +214,22 @@ class BookEntity
    */
   public function getCategoriesIds() {
     return isset($this->categoriesIds) ? $this->categoriesIds : array();
+  }
+
+  /**
+   * @return array
+   */
+  public function getAuthors()
+  {
+    return $this->authors;
+  }
+
+  /**
+   * @param array $authors
+   */
+  public function setAuthors($authors)
+  {
+    $this->authors = $authors;
   }
 
 }

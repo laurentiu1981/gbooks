@@ -50,3 +50,11 @@
     display: none;
 }
 
+.icon {
+    max-width: 50px;
+    max-height: 100px;
+}
+
+#admin-book-table td {
+    text-align: center;
+}
