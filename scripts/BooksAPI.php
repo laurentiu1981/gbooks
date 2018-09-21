@@ -35,14 +35,14 @@ class BooksAPI
     $url = $this->createRequestURL();
     $array = $this->get($url);
     $nrItems = $array['totalItems'];
-    do { //< $nrItems
+    while ($this->startIndex === NULL || $this->startIndex < $nrItems) {
       $items = $array['items'];
       $this->resultArray = $this->addToArray($items);
       $this->startIndex += 40;
       $url = $this->createRequestURL();
       $array = $this->get($url);
       $nrItems = $array['totalItems'];
-    } while ($this->startIndex < $nrItems - 41);
+    }
     return $this->resultArray;
   }
 
@@ -54,7 +54,7 @@ class BooksAPI
    */
   function createRequestURL()
   {
-    $url = 'https://www.googleapis.com/books/v1/volumes?q="' . $this->title . '"';
+    $url = 'https://www.googleapis.com/books/v1/volumes?q="' . urlencode($this->title) . '"';
     $url .= 'inauthor:"' . urlencode($this->author) . '"';
     $url .= 'subject:' . urlencode($this->category);
     $url .= '&key=' . 'AIzaSyBrfRz440kh3BtxxpgfumpOY3IX7olF6xw';
