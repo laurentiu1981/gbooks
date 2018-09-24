@@ -17,6 +17,7 @@ class HomeController extends BasicController
    */
   public function homePageAction()
   {
+    $this->addScript("homepage_chosen.js");
     $this->content = $this->render('/views/home/home_content.tpl.php');
     $sidebar = $this->render('/views/forms/home_search_form.tpl.php');
     $this->renderLayout('/views/layouts/sidebar_page.tpl.php', array('sidebar' => $sidebar));

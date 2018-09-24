@@ -5,8 +5,8 @@
     </span>
     <span>
         <label for="author">Authors:</label>
-        <select class="form-control" id="author" name="author">
-            <option>Select Author</option>
+        <select class="form-control chosen-select" id="author" name="author">
+            <option>Select Authors</option>
         </select>
     </span>
     <span>
