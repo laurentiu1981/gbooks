@@ -204,15 +204,33 @@ class BookEntity
   /**
    * @return array
    */
-  public function getAuthorsIds() {
+  public function getAuthorsIds()
+  {
     return isset($this->authorsIds) ? $this->authorsIds : array();
   }
 
   /**
    * @return array
    */
-  public function getCategoriesIds() {
+  public function getCategoriesIds()
+  {
     return isset($this->categoriesIds) ? $this->categoriesIds : array();
+  }
+
+  /**
+   * @return array
+   */
+  public function getAuthors()
+  {
+    return isset($this->authors) ? $this->authors : array();
+  }
+
+  /**
+   * @return array
+   */
+  public function getCategories()
+  {
+    return isset($this->categories) ? $this->categories : array();
   }
 
 }

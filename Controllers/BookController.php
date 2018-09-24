@@ -20,9 +20,14 @@ class BookController extends BasicController
   {
     $bookModel = new BookModel();
     $book = $bookModel->get($id);
-    $authors = $bookModel->getTermNames($id, 'authors');
-    $categories = $bookModel->getTermNames($id, 'categories');
-    $this->content = $this->render('/views/books/individual_book_page.tpl.php', array('book' => $book, 'authors' => $authors, 'categories' => $categories));
+    if ($book->getRating() === NULL) {
+      $book->setRating('N/A');
+      $ratingStars = '';
+    } else {
+      $ratingStars = gbook_theme_generate_rating_stars($book->getRating());
+    }
+    $this->title = $book->getTitle();
+    $this->content = $this->render('/views/books/individual_book_page.tpl.php', array('book' => $book, 'ratingStars' => $ratingStars));
     $this->renderLayout('/views/layouts/basic.tpl.php');
   }
 }
