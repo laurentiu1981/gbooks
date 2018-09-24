@@ -170,55 +170,55 @@ class BookModel extends BasicModel
   public function generalFindBy($title, $priceFrom, $priceTo, $author)
   {
     $query = $this->dsql_connection->dsql();
-    $sub_query = $this->dsql_connection->dsql();
     $results = $query
+      ->field("id")
+      ->field("title")
+      ->field("description")
+      ->field("rating")
+      ->field("ISBN_13")
+      ->field("ISBN_10")
+      ->field("image")
+      ->field("ISBN_13")
+      ->field("language")
+      ->field("price")
+      ->field("currency")
+      ->field("buy_link")
+      ->field(new Expression("group_concat(fa.term_id) as authorIds"))
       ->table('books', "b")
-      ->join('field_authors fa', new Expression("b.id=fa.entity_id"), "inner")
-      ->join('terms t', new Expression('t.tid=fa.term_id'), "inner")
-      ->join('vocabulary v', new Expression('v.vid=t.vid'), "inner")
-      ->where("v.vocabulary", "=", "authors")
-      ->where('b.title', "LIKE", '%' . $title . '%');
+      ->join('field_authors fa', new Expression("b.id=fa.entity_id"), "inner");
+    if ($title !== "")
+      $query->where('b.title', "LIKE", '%' . $title . '%');
     if ($priceFrom !== "")
       $query->where('b.price', ">=", $priceFrom);
     if ($priceTo !== "")
       $query->where('b.price', "<=", $priceTo);
     if ($author !== "")
-      $query->where('b.id', 'IN',
-        $sub_query
-          ->field("b.id")
-          ->table("books", "b")
-          ->join('field_authors fa', new Expression("b.id=fa.entity_id"), "inner")
-          ->where('fa.term_id', "LIKE", $author));
+      $query
+        ->join('field_authors fa1', new Expression("b.id=fa1.entity_id"), "inner")
+        ->where('fa1.term_id', "=", $author);
+    $query->group("b.id");
     $query->get();
 
-
+    $termModel = new TermModel();
     $books = [];
-    $authors = [];
-    $bId = NULL;
-    $book = NULL;
     foreach ($results as $result) {
-      if (is_null($bId) || $bId !== $result['id']) {
-        $authors = array($result['name']);
-        $book = new BookEntity(array(
-          "id" => $result['id'],
-          "title" => $result['title'],
-          "description" => $result['description'],
-          "rating" => $result['rating'],
-          "ISBN_13" => $result['ISBN_13'],
-          "ISBN_10" => $result['ISBN_10'],
-          "image" => $result['image'],
-          "language" => $result['language'],
-          "price" => $result['price'],
-          "currency" => $result['currency'],
-          "buy_link" => $result['buy_link']
-        ));
-        $books[] = $book;
-        $book->setAuthors($authors);
-        $bId = $result['id'];
-      } else {
-        $authors[] = $result['name'];
-        $book->setAuthors($authors);
-      }
+      $authorsIds = explode(",", $result['authorIds']);
+      $authorNames = $termModel->getTermNamesByIds($authorsIds);
+      $books[] = new BookEntity(array(
+        "id" => $result['id'],
+        "title" => $result['title'],
+        "description" => $result['description'],
+        "rating" => $result['rating'],
+        "ISBN_13" => $result['ISBN_13'],
+        "ISBN_10" => $result['ISBN_10'],
+        "image" => $result['image'],
+        "language" => $result['language'],
+        "price" => $result['price'],
+        "currency" => $result['currency'],
+        "buy_link" => $result['buy_link'],
+        "authorsIds" => $authorsIds,
+        "authors" => $authorNames
+      ));
     }
     return $books;
   }

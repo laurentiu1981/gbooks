@@ -53,6 +53,7 @@
 .book-description {
     text-align: justify;
 }
+
 .icon {
     max-width: 50px;
     max-height: 100px;
@@ -61,6 +62,7 @@
 .book-rating {
     margin-top: 50px;
 }
+
 #admin-book-table td {
     text-align: center;
 }

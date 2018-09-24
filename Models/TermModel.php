@@ -131,4 +131,29 @@ class TermModel extends BasicModel
       ->get();
     return $result;
   }
+
+  /**
+   * Get term names by term ids.
+   *
+   * @param array $ids
+   *        Array of term ids.
+   *
+   * @return array
+   *        Array of term names.
+   *
+   * @throws \atk4\dsql\Exception
+   */
+  public function getTermNamesByIds(array $ids)
+  {
+    $query = $this->dsql_connection->dsql();
+    $results = $query
+      ->field("name")
+      ->table('terms')
+      ->where('tid', 'IN', $ids)
+      ->get();
+    $termNames = [];
+    foreach ($results as $result)
+      $termNames[] = $result["name"];
+    return $termNames;
+  }
 }
