@@ -19,6 +19,7 @@ class BasicController
     } else {
       $this->userStateClass = 'user-logged-out';
     }
+    $this->addScript("header.js");
   }
 
   /**
