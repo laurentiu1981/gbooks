@@ -25,13 +25,17 @@ class AdminController extends BasicController
   {
     $termModel = new TermModel();
     $authors = $termModel->getTermNamesByVocabulary("authors");
+    $categories = $termModel->getTermNamesByVocabulary("categories");
     $options = "<option></option>";
+    $optionsCategories = "<option></option>";
     foreach ($authors as $author)
       $options .= "<option value='" . $author["tid"] . "'>" . $author["name"] . "</option>";
+    foreach ($categories as $category)
+      $optionsCategories .= "<option value='" . $category["tid"] . "'>" . $category["name"] . "</option>";
     $this->addScript("search.js");
     $this->content = $this->render('/views/admin/admin_content.tpl.php');
     $this->addScript("homepage_chosen.js");
-    $sidebar = $this->render('/views/forms/admin_search_form.tpl.php', array('options' => $options));
+    $sidebar = $this->render('/views/forms/admin_search_form.tpl.php', array('options' => $options, 'optionsCategories' => $optionsCategories));
     $this->renderLayout('/views/layouts/sidebar_page.tpl.php', array('sidebar' => $sidebar));
   }
 

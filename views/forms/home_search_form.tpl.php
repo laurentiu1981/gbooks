@@ -6,7 +6,13 @@
     <span>
         <label for="author">Authors:</label>
         <select class="form-control chosen-select" id="author" name="author">
-            <option>Select Authors</option>
+            <?php echo $options ?>
+        </select>
+    </span>
+    <span>
+        <label for="category">Categories:</label>
+        <select class="form-control chosen-select" id="category" name="category">
+            <?php echo $optionsCategories ?>
         </select>
     </span>
     <span>

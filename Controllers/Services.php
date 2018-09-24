@@ -21,7 +21,7 @@ class Services extends BasicController
     $books = [];
     if (empty($errors)) {
       $bookModel = new BookModel();
-      $booksEntity = $bookModel->generalFindBy($_POST['title'], $_POST['price-from'], $_POST['price-to'], $_POST['author']);
+      $booksEntity = $bookModel->generalFindBy($_POST['title'], $_POST['price-from'], $_POST['price-to'], $_POST['author'], $_POST['category']);
       $books = [];
       foreach ($booksEntity as $book) {
         $books[] = $book->jsonSerialize();
