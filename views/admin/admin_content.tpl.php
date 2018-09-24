@@ -1,4 +1,4 @@
-<table id="admin-book-table" class="table table-hover table-bordered">
+<table id="admin-book-table" class="table table-bordered table-striped">
   <thead>
   <tr>
     <th>Icon</th>
@@ -8,5 +8,8 @@
     <th>Options</th>
   </tr>
   </thead>
-  
+  <tbody>
+
+  </tbody>
+
 </table>

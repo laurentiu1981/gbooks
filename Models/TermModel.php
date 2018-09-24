@@ -108,4 +108,52 @@ class TermModel extends BasicModel
     }
     return $term;
   }
+
+  /**
+   * Get term names by vocabulary
+   *
+   * @param string $vocabulary
+   *    Vocabulary name.
+   *
+   * @return array of strings
+   *
+   * @throws \atk4\dsql\Exception
+   */
+  function getTermNamesByVocabulary($vocabulary)
+  {
+    $query = $this->dsql_connection->dsql();
+    $result = $query
+      ->field('t.name')
+      ->field('t.tid')
+      ->table('terms', 't')
+      ->join('vocabulary v', new Expression("t.vid=v.vid"), "inner")
+      ->where('v.vocabulary', '=', $vocabulary)
+      ->get();
+    return $result;
+  }
+
+  /**
+   * Get term names by term ids.
+   *
+   * @param array $ids
+   *        Array of term ids.
+   *
+   * @return array
+   *        Array of term names.
+   *
+   * @throws \atk4\dsql\Exception
+   */
+  public function getTermNamesByIds(array $ids)
+  {
+    $query = $this->dsql_connection->dsql();
+    $results = $query
+      ->field("name")
+      ->table('terms')
+      ->where('tid', 'IN', $ids)
+      ->get();
+    $termNames = [];
+    foreach ($results as $result)
+      $termNames[] = $result["name"];
+    return $termNames;
+  }
 }

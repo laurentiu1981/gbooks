@@ -1,4 +1,4 @@
-<form id="admin-search-form" class="text-center" action="#">
+<form id="admin-search-form" class="text-center">
   <div class="form-group">
     <label for="title">Title</label>
     <input type="text" class="form-control" id="title" name="title" placeholder="Title">
@@ -6,7 +6,7 @@
   <div class="form-group">
     <label for="author">Authors:</label>
     <select class="form-control" id="author" name="author">
-      <option>Select Author</option>
+      <?php echo $options ?>
     </select>
   </div>
   <div class="form-group">
@@ -16,4 +16,6 @@
   </div>
   <button type="submit" class="btn btn-primary btn-md center-block "><span class="glyphicon glyphicon-search"></span>Search
   </button>
+  <div id="alert-message">
+  </div>
 </form>

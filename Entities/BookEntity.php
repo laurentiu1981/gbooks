@@ -17,6 +17,7 @@ class BookEntity
   private $buy_link;
   private $authorsIds;
   private $categoriesIds;
+  private $authors;
 
   public function __construct($params)
   {

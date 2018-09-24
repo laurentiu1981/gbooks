@@ -81,4 +81,14 @@ class BasicController
     $vars = $customVars + $this->getLayoutVars();
     echo $this->render($layout, $vars);
   }
+
+  /**
+   * Include script in layout.
+   *
+   * @param string $scriptFile
+   */
+  public function addScript($scriptFile)
+  {
+    $this->scriptElements .= "<script src='/js/" . $scriptFile . "'></script>";
+  }
 }

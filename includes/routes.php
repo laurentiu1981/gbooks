@@ -31,6 +31,9 @@ function gbooks_routes_definitions()
       'POST' => 'Controllers\AdminController::adminConfigPostAction',
     ),
     '/book/{$id:([0-9]+)}' => 'Controllers\BookController::bookPageAction',
+    '/services/search-books' => array(
+      'POST' => 'Controllers\Services::searchPostAction',
+    ),
   );
 }
 
