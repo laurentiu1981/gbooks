@@ -135,3 +135,26 @@ function get_session_user()
   }
   return !empty($user) ? $user : NULL;
 }
+
+/**
+ * Generates rating stars according to rating.
+ *
+ * @param float $rating
+ *    Given rating.
+ *
+ * @return string
+ *    String containing html code for generating rating stars.
+ */
+function gbook_theme_generate_rating_stars($rating)
+{
+  $roundedRating = round($rating);
+  $ratingStars = '';
+  for ($i = 0; $i < 5; $i++) {
+    if ($i < $roundedRating) {
+      $ratingStars .= '<span class="glyphicon glyphicon-star"></span>';
+    } else {
+      $ratingStars .= '<span class="glyphicon glyphicon-star-empty"></span>';
+    }
+  }
+  return $ratingStars;
+}

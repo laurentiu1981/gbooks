@@ -205,14 +205,16 @@ class BookEntity
   /**
    * @return array
    */
-  public function getAuthorsIds() {
+  public function getAuthorsIds()
+  {
     return isset($this->authorsIds) ? $this->authorsIds : array();
   }
 
   /**
    * @return array
    */
-  public function getCategoriesIds() {
+  public function getCategoriesIds()
+  {
     return isset($this->categoriesIds) ? $this->categoriesIds : array();
   }
 
@@ -221,15 +223,15 @@ class BookEntity
    */
   public function getAuthors()
   {
-    return $this->authors;
+    return isset($this->authors) ? $this->authors : array();
   }
 
   /**
-   * @param array $authors
+   * @return array
    */
-  public function setAuthors($authors)
+  public function getCategories()
   {
-    $this->authors = $authors;
+    return isset($this->categories) ? $this->categories : array();
   }
 
 }

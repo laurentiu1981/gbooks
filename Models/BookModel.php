@@ -29,6 +29,8 @@ class BookModel extends BasicModel
       ->getRow();
     $book = NULL;
     if ($result) {
+      $authors = $this->getTermNames($id, 'authors');
+      $categories = $this->getTermNames($id, 'categories');
       $book = new BookEntity(array(
         "id" => $result['id'],
         "title" => $result['title'],
@@ -40,7 +42,9 @@ class BookModel extends BasicModel
         "language" => $result['language'],
         "price" => $result['price'],
         "currency" => $result['currency'],
-        "buy_link" => $result['buy_link']
+        "buy_link" => $result['buy_link'],
+        "authors" => $authors,
+        "categories" => $categories,
       ));
     }
     return $book;
@@ -146,7 +150,6 @@ class BookModel extends BasicModel
     return $book;
   }
 
-
   /**
    * Filter books.
    *
@@ -218,6 +221,37 @@ class BookModel extends BasicModel
       }
     }
     return $books;
+  }
+
+  /**
+   * Get term name for entity with given id.
+   *
+   * @param $id
+   *    Entity id.
+   *
+   * @param $type
+   *    Type of the term (authors/cathegories).
+   *
+   * @return array
+   *    List of terms keyed by tid.
+   *
+   * @throws \atk4\dsql\Exception
+   */
+  public function getTermNames($id, $type)
+  {
+    $query = $this->dsql_connection->dsql();
+    $table = 'field_' . $type . ' f';
+    $result = $query->table('terms', 't')
+      ->field('name')
+      ->field('tid')
+      ->join($table, new Expression('t.tid=f.term_id'), 'inner')
+      ->where('f.entity_id', '=', $id)
+      ->get();
+    $termNames = [];
+    foreach ($result as $termInfo) {
+      $termNames[$termInfo['tid']] = $termInfo['name'];
+    }
+    return $termNames;
   }
 
 }
