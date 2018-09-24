@@ -1,6 +1,7 @@
 <?php
 
 namespace scripts;
+
 use Entities\BookEntity;
 use Entities\TermEntity;
 use Models\BookModel;
@@ -12,9 +13,11 @@ class BooksAPI
   private $resultArray;
   private $author;
   private $category;
+  private $title;
 
-  public function __construct($author, $category)
+  public function __construct($title, $author, $category)
   {
+    $this->title = $title;
     $this->author = $author;
     $this->category = $category;
     $this->startIndex = 0;
@@ -32,7 +35,7 @@ class BooksAPI
     $url = $this->createRequestURL();
     $array = $this->get($url);
     $nrItems = $array['totalItems'];
-    while ($this->startIndex < $nrItems - 41) { //< $nrItems
+    while (is_null($nrItems) && $this->startIndex < $nrItems) {
       $items = $array['items'];
       $this->resultArray = $this->addToArray($items);
       $this->startIndex += 40;
@@ -51,7 +54,7 @@ class BooksAPI
    */
   function createRequestURL()
   {
-    $url = 'https://www.googleapis.com/books/v1/volumes?q=""';
+    $url = 'https://www.googleapis.com/books/v1/volumes?q="' . urlencode($this->title) . '"';
     $url .= 'inauthor:"' . urlencode($this->author) . '"';
     $url .= 'subject:' . urlencode($this->category);
     $url .= '&key=' . 'AIzaSyBrfRz440kh3BtxxpgfumpOY3IX7olF6xw';
@@ -147,7 +150,8 @@ class BooksAPI
    * @return array
    *    Array of term IDs for the authors/categories saved
    */
-  function saveTerms($termList, $type){
+  function saveTerms($termList, $type)
+  {
     $termModel = new TermModel();
     $termArray = array();
     if (is_array($termList)) {
@@ -157,8 +161,7 @@ class BooksAPI
           $newTerm = new TermEntity(array('vocabulary' => $type, 'name' => $name));
           $tid = $termModel->save($newTerm);
           $termArray[] = $tid;
-        }
-        else {
+        } else {
           $termArray[] = $term->getTid();
         }
       }
@@ -169,10 +172,11 @@ class BooksAPI
   /**
    * Saves books into the database.
    */
-  function saveBooksToDatabase(){
+  function saveBooksToDatabase()
+  {
     $books = $this->getBooks();
     $bookModel = new BookModel();
-    foreach ($books as $book){
+    foreach ($books as $book) {
       $book['authorsIds'] = $this->saveTerms($book['authors'], 'authors');
       $book['categoriesIds'] = $this->saveTerms($book['categories'], 'categories');
       unset($book['authors']);

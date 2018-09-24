@@ -33,11 +33,16 @@
 ## Import books
 
    Run script for import books `php books_script.php <category> <author>`
-   You must enter at least one argument and maximum two.
+   You must enter at least one argument and maximum three.
    Examples:
    ```
-    php books_script.php "Fiction"
-    php books_script.php "Fiction" ""
-    php books_script.php "Fiction" "Frank Herbert"
+    php books_script.php "Dune" "" ""
+    php books_script.php "Dune" "Frank Herbert" ""
+    php books_script.php "Dune" "" "Fiction"
+    php books_script.php "" "Frank Herbert" ""
+    php books_script.php "" "Frank Herbert" "Fiction"
+    php books_script.php "Dune" "Frank Herbert" "Fiction"
+    
+   
    ```
   
