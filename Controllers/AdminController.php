@@ -30,6 +30,7 @@ class AdminController extends BasicController
       $options .= "<option value='" . $author["tid"] . "'>" . $author["name"] . "</option>";
     $this->addScript("search.js");
     $this->content = $this->render('/views/admin/admin_content.tpl.php');
+    $this->addScript("homepage_chosen.js");
     $sidebar = $this->render('/views/forms/admin_search_form.tpl.php', array('options' => $options));
     $this->renderLayout('/views/layouts/sidebar_page.tpl.php', array('sidebar' => $sidebar));
   }
