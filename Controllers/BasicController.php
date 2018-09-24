@@ -89,6 +89,6 @@ class BasicController
    */
   public function addScript($scriptFile)
   {
-    $this->scriptElements .= "<script src='js/" . $scriptFile . "'></script>";
+    $this->scriptElements .= "<script src='/js/" . $scriptFile . "'></script>";
   }
 }

@@ -28,6 +28,7 @@ class Services extends BasicController
       }
     }
     $result = array("errors" => $errors, "books" => $books);
+    header("Content-Type: application/json");
     $json = json_encode($result);
     echo $json;
     exit(1);

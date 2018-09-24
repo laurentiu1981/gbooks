@@ -22,9 +22,12 @@
 
     function successCallback(data) {
         try {
-            data = JSON.parse(data);
+            if(typeof data !== "object") {
+                JSON.parse(data);
+            }
         } catch (e) {
-            $("body").append("ERRORS: " + data);
+            $("#messages").html(data);
+            $("#messages").addClass("alert alert-warning");
             return;
         }
 
