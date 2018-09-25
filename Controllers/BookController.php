@@ -32,18 +32,13 @@ class BookController extends BasicController
 
   public function deletePage($id)
   {
-    if (!isset($_GET['confirmed'])) {
-      $url = $_SERVER['REQUEST_URI'];
-      echo "
-      <script type='text/javascript'>
-          var response=confirm('Are you sure you want to delete this book?');
-          if (response==true){
-              window.location.href='" . $url . "?confirmed=1';
-          }
-      </script>";
-    } elseif ($_GET['confirmed'] == 1) {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $bookModel = new BookModel();
       $bookModel->deleteBook($id);
+    }
+    else {
+      $this->content = $this->render('/views/books/delete_book_page.tpl.php');
+      $this->renderLayout('/views/layouts/basic.tpl.php');
     }
   }
 }
