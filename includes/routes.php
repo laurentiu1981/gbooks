@@ -34,6 +34,7 @@ function gbooks_routes_definitions()
     '/services/search-books' => array(
       'POST' => 'Controllers\Services::searchPostAction',
     ),
+    '/admin/books/delete/{$id:([0-9]+)}' => 'Controllers\BookController::deletePage',
   );
 }
 

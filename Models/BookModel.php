@@ -264,4 +264,19 @@ class BookModel extends BasicModel
     return $termNames;
   }
 
+  public function deleteBook($id) {
+    $query = $this->dsql_connection->dsql();
+    $query->table('books')
+      ->where('id', '=', $id)
+      ->delete();
+    $query = $this->dsql_connection->dsql();
+    $query->table('field_authors')
+      ->where('entity_id', '=', $id)
+      ->delete();
+    $query = $this->dsql_connection->dsql();
+    $query->table('field_categories')
+      ->where('entity_id', '=', $id)
+      ->delete();
+  }
+
 }
