@@ -24,7 +24,7 @@ class Services extends BasicController
       $booksEntity = $bookModel->generalFindBy($_POST['title'], $_POST['price-from'], $_POST['price-to'], $_POST['author']);
       $books = [];
       foreach ($booksEntity as $book) {
-        $books[] = array("title" => $book->getTitle(), "image" => $book->getImage(), "link" => $book->getBuyLink(), "authors" => $book->getAuthors());
+        $books[] = $book->jsonSerialize();
       }
     }
     $result = array("errors" => $errors, "books" => $books);
