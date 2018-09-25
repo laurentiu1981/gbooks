@@ -23,7 +23,7 @@ class BookController extends BasicController
       $book->setRating('N/A');
       $ratingStars = '';
     } else {
-      $ratingStars = gbook_theme_generate_rating_stars($book->getRating());
+      $ratingStars = gbooks_theme_generate_rating_stars($book->getRating());
     }
     $this->title = $book->getTitle();
     $this->content = $this->render('/views/books/individual_book_page.tpl.php', array('book' => $book, 'ratingStars' => $ratingStars));

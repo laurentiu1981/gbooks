@@ -19,7 +19,7 @@ class BasicController
     } else {
       $this->userStateClass = 'user-logged-out';
     }
-    $this->addScript("header.js");
+    $this->addScript("/js/generic.js");
   }
 
   /**
@@ -90,6 +90,6 @@ class BasicController
    */
   public function addScript($scriptFile)
   {
-    $this->scriptElements .= "<script src='/js/" . $scriptFile . "'></script>";
+    $this->scriptElements .= "<script src='" . $scriptFile . "'></script>";
   }
 }

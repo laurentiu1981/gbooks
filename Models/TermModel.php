@@ -129,7 +129,11 @@ class TermModel extends BasicModel
       ->join('vocabulary v', new Expression("t.vid=v.vid"), "inner")
       ->where('v.vocabulary', '=', $vocabulary)
       ->get();
-    return $result;
+    $terms = array();
+    foreach($result as $item) {
+      $terms[$item['tid']] = $item['name'];
+    }
+    return $terms;
   }
 
   /**
