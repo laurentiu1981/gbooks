@@ -29,4 +29,19 @@ class BookController extends BasicController
     $this->content = $this->render('/views/books/individual_book_page.tpl.php', array('book' => $book, 'ratingStars' => $ratingStars));
     $this->renderLayout('/views/layouts/basic.tpl.php');
   }
+
+  public function deletePage($id)
+  {
+    if (!empty($_POST )) {
+      $bookModel = new BookModel();
+      $bookModel->deleteBook($id);
+      set_message('Deleted successfully', 'status');
+      redirect("/admin");
+
+    }
+    else {
+      $this->content = $this->render('/views/books/delete_book_page.tpl.php');
+      $this->renderLayout('/views/layouts/basic.tpl.php');
+    }
+  }
 }
