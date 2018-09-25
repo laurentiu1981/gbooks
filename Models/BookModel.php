@@ -167,7 +167,7 @@ class BookModel extends BasicModel
    *
    * @throws \atk4\dsql\Exception
    */
-  public function generalFindBy($title, $priceFrom, $priceTo, $author)
+  public function generalFindBy($title, $priceFrom, $priceTo, $author, $category)
   {
     $query = $this->dsql_connection->dsql();
     $results = $query
@@ -184,8 +184,10 @@ class BookModel extends BasicModel
       ->field("currency")
       ->field("buy_link")
       ->field(new Expression("group_concat(fa.term_id) as authorIds"))
+      ->field(new Expression("group_concat(fc.term_id) as categoriesIds"))
       ->table('books', "b")
-      ->join('field_authors fa', new Expression("b.id=fa.entity_id"), "inner");
+      ->join('field_authors fa', new Expression("b.id=fa.entity_id"), "inner")
+      ->join('field_categories fc', new Expression("b.id=fc.entity_id"), "inner");
     if ($title !== "")
       $query->where('b.title', "LIKE", '%' . $title . '%');
     if ($priceFrom !== "")
@@ -196,6 +198,10 @@ class BookModel extends BasicModel
       $query
         ->join('field_authors fa1', new Expression("b.id=fa1.entity_id"), "inner")
         ->where('fa1.term_id', "=", $author);
+    if ($category !== "")
+      $query
+        ->join('field_categories fc1', new Expression("b.id=fc1.entity_id"), "inner")
+        ->where('fc1.term_id', "=", $category);
     $query->group("b.id");
     $query->get();
 
@@ -203,7 +209,9 @@ class BookModel extends BasicModel
     $books = [];
     foreach ($results as $result) {
       $authorsIds = explode(",", $result['authorIds']);
+      $categoriesIds = explode(",", $result['categoriesIds']);
       $authorNames = $termModel->getTermNamesByIds($authorsIds);
+      $categoryNames = $termModel->getTermNamesByIds($categoriesIds);
       $books[] = new BookEntity(array(
         "id" => $result['id'],
         "title" => $result['title'],
@@ -217,7 +225,9 @@ class BookModel extends BasicModel
         "currency" => $result['currency'],
         "buy_link" => $result['buy_link'],
         "authorsIds" => $authorsIds,
-        "authors" => $authorNames
+        "categoriesIds" => $categoriesIds,
+        "authors" => $authorNames,
+        "categories" => $categoryNames,
       ));
     }
     return $books;

@@ -145,7 +145,7 @@ function get_session_user()
  * @return string
  *    String containing html code for generating rating stars.
  */
-function gbook_theme_generate_rating_stars($rating)
+function gbooks_theme_generate_rating_stars($rating)
 {
   $roundedRating = round($rating);
   $ratingStars = '';
@@ -157,4 +157,21 @@ function gbook_theme_generate_rating_stars($rating)
     }
   }
   return $ratingStars;
+}
+
+function gbooks_theme_generate_select_options($items, $defaultValue = FALSE, $initialLabel = 'Any') {
+  $options = '';
+  if (!empty($initialLabel)) {
+    $options = '<option value="">' . $initialLabel . '</option>';
+  }
+
+  foreach ($items as $value => $label) {
+    if ($defaultValue == $value) {
+      $options .= '<option selected="selected" value="' . $value . '">' . $label . '</option>';
+    }
+    else {
+      $options .= '<option value="' . $value . '">' . $label . '</option>';
+    }
+  }
+  return $options;
 }

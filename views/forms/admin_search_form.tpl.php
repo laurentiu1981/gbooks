@@ -10,6 +10,12 @@
         </select>
     </div>
     <div class="form-group">
+        <label for="category">Categories:</label>
+        <select class="form-control chosen-select" id="category" name="category">
+          <?php echo $optionsCategories ?>
+        </select>
+    </div>
+    <div class="form-group">
         <label>Price</label>
         <input type="number" class="form-control" id="price-from" name="price-from" placeholder="from" min="0">
         <input type="number" class="form-control" id="price-to" name="price-to" placeholder="to" min="0">

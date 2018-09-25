@@ -24,14 +24,11 @@ class AdminController extends BasicController
   public function adminPageAction()
   {
     $termModel = new TermModel();
-    $authors = $termModel->getTermNamesByVocabulary("authors");
-    $options = "<option></option>";
-    foreach ($authors as $author)
-      $options .= "<option value='" . $author["tid"] . "'>" . $author["name"] . "</option>";
-    $this->addScript("search.js");
+    $authorsOptions = gbooks_theme_generate_select_options($termModel->getTermNamesByVocabulary("authors"));
+    $categoriesOptions = gbooks_theme_generate_select_options($termModel->getTermNamesByVocabulary("categories"));
+    $this->addScript("/js/search.js");
     $this->content = $this->render('/views/admin/admin_content.tpl.php');
-    $this->addScript("homepage_chosen.js");
-    $sidebar = $this->render('/views/forms/admin_search_form.tpl.php', array('options' => $options));
+    $sidebar = $this->render('/views/forms/admin_search_form.tpl.php', array('options' => $authorsOptions, 'optionsCategories' => $categoriesOptions));
     $this->renderLayout('/views/layouts/sidebar_page.tpl.php', array('sidebar' => $sidebar));
   }
 
