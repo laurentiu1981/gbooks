@@ -66,3 +66,9 @@
 form {
     padding: 0.5em;
 }
+
+#edit-submit {
+    position: fixed;
+    bottom: 5px;
+    left: 5px;
+}
