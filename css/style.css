@@ -63,6 +63,6 @@
     margin-top: 50px;
 }
 
-#admin-book-table td {
-    text-align: center;
+form {
+    padding: 0.5em;
 }

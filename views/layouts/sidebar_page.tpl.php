@@ -17,8 +17,8 @@
 
 <div class="row">
     <div class="col-sm-12" id="messages"><?php echo $messages; ?></div>
-    <div class="col-sm-2"><?php echo $sidebar; ?></div>
-    <content class="col-sm-10">
+    <div class="col-sm-3"><?php echo $sidebar; ?></div>
+    <content class="col-sm-9">
         <div><?php echo $content; ?></div>
     </content>
 </div>
