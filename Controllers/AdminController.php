@@ -26,8 +26,8 @@ class AdminController extends BasicController
     $termModel = new TermModel();
     $authors = $termModel->getTermNamesByVocabulary("authors");
     $categories = $termModel->getTermNamesByVocabulary("categories");
-    $options = "<option></option>";
-    $optionsCategories = "<option></option>";
+    $options = "";
+    $optionsCategories = "";
     foreach ($authors as $author)
       $options .= "<option value='" . $author["tid"] . "'>" . $author["name"] . "</option>";
     foreach ($categories as $category)
