@@ -22,7 +22,7 @@
 
     function successCallback(data) {
         try {
-            if(typeof data !== "object") {
+            if (typeof data !== "object") {
                 JSON.parse(data);
             }
         } catch (e) {
@@ -38,13 +38,19 @@
             table.empty();
             for (let i = 0; i < data["books"].length; i++) {
                 var icon = "<img  class='icon' src='" + data["books"][i]["image"] + "'/>";
-                var link = "<a href='" + data["books"][i]["link"] + "'>Download link</a>";
+                var link = "<a href='" + data["books"][i]["link"] + "'>Buy link</a>";
+                var id = data["books"][i]["id"];
+                var editLink = "<a href='/admin/book/edit/" + id + "' >Edit</a>";
+                var deleteLink = "<a href='/admin/book/delete/" + id + "'>Delete</a>";
                 table.append($('<tr>')
                     .append('<td>' + icon + '</td>')
                     .append('<td>' + data["books"][i]["title"] + '</td>')
                     .append('<td>' + link + '</td>')
                     .append('<td>' + data["books"][i]["authors"] + '</td>')
-                    .append('<td></td>'));
+                    .append('<td>' + data["books"][i]["price"] + '</td>')
+                    .append('<td>' + data["books"][i]["currency"] + '</td>')
+                    .append('<td>' + data["books"][i]["language"] + '</td>')
+                    .append('<td>' + editLink + " | " + deleteLink + '</td>'));
 
             }
         }

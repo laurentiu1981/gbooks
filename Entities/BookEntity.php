@@ -234,4 +234,12 @@ class BookEntity
     return isset($this->categories) ? $this->categories : array();
   }
 
+  public function jsonSerialize()
+  {
+    $array = array_map(function ($v) {
+      return (is_null($v)) ? "" : $v;
+    }, get_object_vars($this));
+    return $array;
+  }
+
 }
