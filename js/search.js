@@ -37,7 +37,10 @@
             var table = $("#admin-book-table").find('tbody');
             table.empty();
             for (let i = 0; i < data["books"].length; i++) {
-                var icon = "<img  class='icon' src='" + data["books"][i]["image"] + "'/>";
+                if (data["books"][i]["image"])
+                    var icon = "<img  class='icon' src='" + data["books"][i]["image"] + "'/>";
+                else
+                    var icon = "<img  class='icon' src='/images/default.jpeg'/>";
                 var link = "<a href='" + data["books"][i]["link"] + "'>Buy link</a>";
                 var id = data["books"][i]["id"];
                 var editLink = "<a href='/admin/book/edit/" + id + "' >Edit</a>";
