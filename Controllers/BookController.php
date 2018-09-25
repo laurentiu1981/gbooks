@@ -32,9 +32,12 @@ class BookController extends BasicController
 
   public function deletePage($id)
   {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!empty($_POST )) {
       $bookModel = new BookModel();
       $bookModel->deleteBook($id);
+      set_message('Deleted successfully', 'status');
+      redirect("/admin");
+
     }
     else {
       $this->content = $this->render('/views/books/delete_book_page.tpl.php');
