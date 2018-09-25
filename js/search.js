@@ -40,13 +40,8 @@
                 var icon = "<img  class='icon' src='" + data["books"][i]["image"] + "'/>";
                 var link = "<a href='" + data["books"][i]["link"] + "'>Buy link</a>";
                 var id = data["books"][i]["id"];
-                var editButton = "<button " +
-                    "onclick=\"location.href ='/admin/book/edit/" + id + "'\" class='btn btn-info btn-md'>" +
-                    " <span class='glyphicon glyphicon-edit'></span>Edit</button>";
-
-                var deleteButton = "<button " +
-                    "onclick=\"location.href ='/admin/book/delete/" + id + "'\" class='btn btn-danger btn-md'>" +
-                    " <span class='glyphicon glyphicon-remove'></span>Delete</button>";
+                var editLink = "<a href='/admin/book/edit/" + id + "' >Edit</a>";
+                var deleteLink = "<a href='/admin/book/delete/" + id + "'>Delete</a>";
                 table.append($('<tr>')
                     .append('<td>' + icon + '</td>')
                     .append('<td>' + data["books"][i]["title"] + '</td>')
@@ -55,11 +50,9 @@
                     .append('<td>' + data["books"][i]["price"] + '</td>')
                     .append('<td>' + data["books"][i]["currency"] + '</td>')
                     .append('<td>' + data["books"][i]["language"] + '</td>')
-                    .append('<td><pre>' + editButton + " | " + deleteButton + '</pre></td>'));
+                    .append('<td>' + editLink + " | " + deleteLink + '</td>'));
 
             }
-            $("pre").css("border", "0");
-            $("pre").css("background-color", "transparent");
         }
 
     }
