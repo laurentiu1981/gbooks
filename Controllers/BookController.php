@@ -32,16 +32,34 @@ class BookController extends BasicController
 
   public function deletePage($id)
   {
-    if (!empty($_POST )) {
+    if (!empty($_POST)) {
       $bookModel = new BookModel();
       $bookModel->deleteBook($id);
       set_message('Deleted successfully', 'status');
       redirect("/admin");
-
-    }
-    else {
+    } else {
       $this->content = $this->render('/views/books/delete_book_page.tpl.php');
       $this->renderLayout('/views/layouts/basic.tpl.php');
     }
   }
+
+  /**
+   * Callback for /admin/book/edit/%id route.
+   */
+  public function editPageAction($id)
+  {
+    $bookModel = new BookModel();
+    if (!empty($_POST)) {
+      $bookModel->updateBook($id, $_POST);
+      set_message('Book successfully updated!', 'status');
+      redirect('/admin/book/edit/' . $id);
+    } else {
+      $book = $bookModel->get($id);
+      $this->title = $book->getTitle();
+      $this->content = $this->render('/views/books/edit_book_page.tpl.php', array('book' => $book));
+      $this->renderLayout('/views/layouts/basic.tpl.php');
+    }
+  }
+
+
 }

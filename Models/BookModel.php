@@ -266,8 +266,7 @@ class BookModel extends BasicModel
     return $termNames;
   }
 
-  public function deleteBook($id)
-  {
+  public function deleteBook($id) {
     $query = $this->dsql_connection->dsql();
     $query->table('books')
       ->where('id', '=', $id)
@@ -280,6 +279,24 @@ class BookModel extends BasicModel
     $query->table('field_categories')
       ->where('entity_id', '=', $id)
       ->delete();
+  }
+
+
+  /**
+   * Update book.
+   *
+   * @param int $id
+   * @param array $params
+   *
+   * @throws \atk4\dsql\Exception
+   */
+  public function updateBook($id, $params)
+  {
+    $query = $this->dsql_connection->dsql();
+    $query->table('books');
+    if (isset($params["description"]))
+      $query->set("description", $params["description"]);
+    $query->where("id", "=", $id)->update();
   }
 
 }
