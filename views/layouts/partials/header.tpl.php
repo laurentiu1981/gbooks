@@ -8,6 +8,7 @@
         <ul class="nav navbar-nav">
             <li><a href="/"> Home</a></li>
             <li><a href="/admin"> Admin</a></li>
+            <li class="logged-in"><a href="/admin/settings"> Settings</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li class="logged-out">
