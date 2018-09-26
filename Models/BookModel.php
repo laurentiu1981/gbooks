@@ -104,7 +104,8 @@ class BookModel extends BasicModel
    *
    * @throws \atk4\dsql\Exception
    */
-  public function saveMapping($entity_id, $term_id, $table_name)
+  public
+  function saveMapping($entity_id, $term_id, $table_name)
   {
     $query = $this->dsql_connection->dsql();
     $query->table($table_name)
@@ -124,7 +125,8 @@ class BookModel extends BasicModel
    *
    * @throws
    */
-  public function find($title)
+  public
+  function find($title)
   {
     $query = $this->dsql_connection->dsql();
     $result = $query
@@ -167,7 +169,8 @@ class BookModel extends BasicModel
    *
    * @throws \atk4\dsql\Exception
    */
-  public function generalFindBy($title, $priceFrom, $priceTo, $author, $category)
+  public
+  function generalFindBy($title, $priceFrom, $priceTo, $author, $category)
   {
     $query = $this->dsql_connection->dsql();
     $results = $query
@@ -247,7 +250,8 @@ class BookModel extends BasicModel
    *
    * @throws \atk4\dsql\Exception
    */
-  public function getTermNames($id, $type)
+  public
+  function getTermNames($id, $type)
   {
     $query = $this->dsql_connection->dsql();
     $table = 'field_' . $type . ' f';
@@ -264,7 +268,8 @@ class BookModel extends BasicModel
     return $termNames;
   }
 
-  public function deleteBook($id)
+  public
+  function deleteBook($id)
   {
     $query = $this->dsql_connection->dsql();
     $query->table('books')
@@ -280,28 +285,22 @@ class BookModel extends BasicModel
       ->delete();
   }
 
+
   /**
-   * Update a book entity.
+   * Update book.
    *
-   * @param BookEntity $book
+   * @param int $id
+   * @param array $params
+   *
+   * @throws \atk4\dsql\Exception
    */
-  public function update($book)
+  public function updateBook($id, $params)
   {
     $query = $this->dsql_connection->dsql();
-    try {
-      $query->table('books')
-        ->set('title', $book->getTitle())
-        ->set('description', $book->getDescription())
-        ->set('image', $book->getImage())
-        ->set('language', $book->getLanguage())
-        ->set('price', $book->getPrice())
-        ->set('currency', $book->getCurrency())
-        ->set('buy_link', $book->getBuyLink());
-      $query->where("id", "=", $book->getId())
-        ->update();
-    } catch (Exception $e) {
-      set_message('QUERY ERROR: ' . $e->getMessage(), "error");
-    }
+    $query->table('books');
+    if (isset($params["description"]))
+      $query->set("description", $params["description"]);
+    $query->where("id", "=", $id)->update();
   }
 
 }

@@ -3,7 +3,6 @@
 namespace Controllers;
 
 
-use Entities\BookEntity;
 use Models\BookModel;
 
 class BookController extends BasicController
@@ -51,16 +50,15 @@ class BookController extends BasicController
   {
     $bookModel = new BookModel();
     if (!empty($_POST)) {
-      $_POST["buy_link"] = $_POST["buy-link"];
-      $bookModel->update(new BookEntity($_POST));
-      if (empty(get_messages()))
-        set_message('Book successfully updated!', 'status');
+      $bookModel->updateBook($id, $_POST);
+      set_message('Book successfully updated!', 'status');
+      redirect('/admin/book/edit/' . $id);
+    } else {
+      $book = $bookModel->get($id);
+      $this->title = $book->getTitle();
+      $this->content = $this->render('/views/books/edit_book_page.tpl.php', array('book' => $book));
+      $this->renderLayout('/views/layouts/basic.tpl.php');
     }
-    $book = $bookModel->get($id);
-    $this->title = $book->getTitle();
-    $messages = render_messages(get_messages());
-    $this->content = $this->render('/views/books/edit_book_page.tpl.php', array('book' => $book));
-    $this->renderLayout('/views/layouts/basic.tpl.php', array('messages' => $messages));
   }
 
 
