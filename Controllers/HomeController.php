@@ -34,14 +34,16 @@ class HomeController extends BasicController
       $books = $bookModel->generalFindBy('', '', '', '', '', 12);
     }
 
+    $defaultAuthor = isset($_GET['author']) ? $_GET['author'] : '';
     $homepageBooks = gbooks_generate_books($books);
     $authorsOptions = gbooks_theme_generate_select_options(
       $termModel->getTermNamesByVocabulary("authors"),
-      $_GET['author']
+      $defaultAuthor
     );
+    $defaultCategory = isset($_GET['category']) ? $_GET['category'] : '';
     $categoriesOptions = gbooks_theme_generate_select_options(
       $termModel->getTermNamesByVocabulary("categories"),
-      $_GET['category']
+      $defaultCategory
     );
     $this->content = $this->render('/views/home/home_content.tpl.php', array('homepageBooks' => $homepageBooks));
     $sidebar = $this->render('/views/forms/home_search_form.tpl.php', array(

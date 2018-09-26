@@ -1,8 +1,8 @@
-<form action="#">
+<form action="/search" method="GET">
   <div class="form-group">
     <label for="title">Title</label>
     <input type="text" class="form-control" id="title" name="title" placeholder="Title"
-           value="<?php echo $searchFields['title']; ?>">
+           value="<?php echo isset($searchFields['title']) ? $searchFields['title'] : ''; ?>">
   </div>
   <div class="form-group">
     <label for="author">Authors:</label>
@@ -19,9 +19,9 @@
   <div class="form-group">
     <label>Price</label>
     <input type="number" class="form-control" id="price-from" name="price-from" placeholder="from" min="0"
-           value="<?php echo $searchFields['priceFrom']; ?>">
+           value="<?php echo isset($searchFields['price-from']) ? $searchFields['price-from'] : '';; ?>">
     <input type="number" class="form-control" id="price-to" name="price-to" placeholder="to" min="0"
-           value="<?php echo $searchFields['priceTo']; ?>">
+           value="<?php echo isset($searchFields['price-to']) ? $searchFields['price-to'] : '';; ?>">
   </div>
   <button type="submit" class="btn btn-primary btn-md"><span class="glyphicon glyphicon-search"></span>Search
   </button>
