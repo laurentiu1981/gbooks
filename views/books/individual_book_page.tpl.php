@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row">
         <div class="col-sm-2">
-            <img src=<?php echo $book->getImage(); ?>>
+            <img src="<?php echo $book->getImage() ?>">
         </div>
         <div class="col-sm-10">
             <h1><?php echo $book->getTitle(); ?></h1>

@@ -104,8 +104,7 @@ class BookModel extends BasicModel
    *
    * @throws \atk4\dsql\Exception
    */
-  public
-  function saveMapping($entity_id, $term_id, $table_name)
+  public function saveMapping($entity_id, $term_id, $table_name)
   {
     $query = $this->dsql_connection->dsql();
     $query->table($table_name)
@@ -125,8 +124,7 @@ class BookModel extends BasicModel
    *
    * @throws
    */
-  public
-  function find($title)
+  public function find($title)
   {
     $query = $this->dsql_connection->dsql();
     $result = $query
@@ -169,8 +167,7 @@ class BookModel extends BasicModel
    *
    * @throws \atk4\dsql\Exception
    */
-  public
-  function generalFindBy($title, $priceFrom, $priceTo, $author, $category)
+  public function generalFindBy($title, $priceFrom, $priceTo, $author, $category)
   {
     $query = $this->dsql_connection->dsql();
     $results = $query
@@ -215,6 +212,8 @@ class BookModel extends BasicModel
       $categoriesIds = explode(",", $result['categoriesIds']);
       $authorNames = $termModel->getTermNamesByIds($authorsIds);
       $categoryNames = $termModel->getTermNamesByIds($categoriesIds);
+      if (!$result['image'])
+        $result['image'] = "/images/default.jpeg";
       $books[] = new BookEntity(array(
         "id" => $result['id'],
         "title" => $result['title'],
@@ -250,8 +249,7 @@ class BookModel extends BasicModel
    *
    * @throws \atk4\dsql\Exception
    */
-  public
-  function getTermNames($id, $type)
+  public function getTermNames($id, $type)
   {
     $query = $this->dsql_connection->dsql();
     $table = 'field_' . $type . ' f';
@@ -268,9 +266,7 @@ class BookModel extends BasicModel
     return $termNames;
   }
 
-  public
-  function deleteBook($id)
-  {
+  public function deleteBook($id) {
     $query = $this->dsql_connection->dsql();
     $query->table('books')
       ->where('id', '=', $id)
