@@ -52,7 +52,7 @@ class BookController extends BasicController
     if (!empty($_POST)) {
       $bookModel->updateBook($id, $_POST);
       set_message('Book successfully updated!', 'status');
-      redirect('/admin/book/edit/' . $id);
+      redirect(isset($_GET["destination"]) ? $_GET["destination"] : "/book/" . $id);
     } else {
       $book = $bookModel->get($id);
       $this->title = $book->getTitle();

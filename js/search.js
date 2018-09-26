@@ -42,7 +42,7 @@
                 if (data["books"][i]["buy_link"])
                     link = "<a href='" + data["books"][i]["buy_link"] + "'>Buy link</a>";
                 var id = data["books"][i]["id"];
-                var editLink = "<a href='/admin/book/edit/" + id + "' >Edit</a>";
+                var editLink = "<a href='/admin/book/edit/" + id + "?destination=/admin'' >Edit</a>";
                 var deleteLink = "<a href='/admin/book/delete/" + id + "'>Delete</a>";
                 table.append($('<tr>')
                     .append('<td>' + icon + '</td>')
