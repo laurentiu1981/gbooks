@@ -17,7 +17,7 @@ class Services extends BasicController
    */
   public function searchPostAction()
   {
-    $errors = $this->validationMessages();
+    $errors = $this->validationMessages($_POST);
     $books = [];
     if (empty($errors)) {
       $bookModel = new BookModel();
@@ -36,18 +36,19 @@ class Services extends BasicController
 
 
   /**
-   * Validate Post request parameters.
-   *
+   * Validate request parameters.
+   * @param $params
+   *    Request method.
    * @return array
    *    validation error messages.
    */
-  public function validationMessages()
+  public function validationMessages($params)
   {
     $messages = array();
-    if (!empty($_POST['price-from']) && !is_numeric($_POST['price-from'])) {
+    if (!empty($params['price-from']) && !is_numeric($params['price-from'])) {
       $messages[] = "From price is not numeric";
     }
-    if (!empty($_POST['price-to']) && !is_numeric(($_POST['price-to']))) {
+    if (!empty($params['price-to']) && !is_numeric(($params['price-to']))) {
       $messages[] = "To price is not numeric";
     }
     return $messages;
