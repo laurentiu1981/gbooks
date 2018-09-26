@@ -302,29 +302,4 @@ class BookModel extends BasicModel
     $query->where("id", "=", $id)->update();
   }
 
-  /**
-   * Validates prices introduced by user in homepage search.
-   *
-   * @param int $priceFrom
-   *    Starting price introduced by user.
-   *
-   * @param $priceTo
-   *    Maximum price introduced by user.
-   *
-   * @return bool
-   *    True if prices are valid, false otherwise.
-   */
-  public function areValidPrices($priceFrom, $priceTo)
-  {
-    $messages = array();
-    if (empty($priceFrom) || empty($priceTo)) {
-      $messages[] = 'Price fields are not set.';
-    }
-    if (is_numeric($priceFrom) === FALSE || is_numeric($priceTo) === FALSE) {
-      $messages[] = 'Prices must be numeric values.';
-    }
-    set_error_messages($messages);
-    return empty($messages);
-  }
-  
 }

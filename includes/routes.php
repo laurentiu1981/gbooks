@@ -34,7 +34,6 @@ function gbooks_routes_definitions()
     '/services/search-books' => array(
       'POST' => 'Controllers\Services::searchPostAction',
     ),
-<<<<<<< HEAD
     '/admin/book/delete/{$id:([0-9]+)}' => array(
       'GET' => 'Controllers\BookController::deletePage',
       'POST' => 'Controllers\BookController::deletePage',
@@ -43,9 +42,7 @@ function gbooks_routes_definitions()
       'GET' => 'Controllers\BookController::editPageAction',
       'POST' => 'Controllers\BookController::editPageAction',
     ),
-=======
     '/search' => 'Controllers\HomeController::homepageAction',
->>>>>>> GBOOK-19: Add functionality for homepage searchform.
   );
 }
 
