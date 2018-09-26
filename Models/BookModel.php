@@ -167,7 +167,7 @@ class BookModel extends BasicModel
    *
    * @throws \atk4\dsql\Exception
    */
-  public function generalFindBy($title, $priceFrom, $priceTo, $author, $category)
+  public function generalFindBy($title, $priceFrom, $priceTo, $author, $category, $limit = FALSE)
   {
     $query = $this->dsql_connection->dsql();
     $results = $query
@@ -188,20 +188,23 @@ class BookModel extends BasicModel
       ->table('books', "b")
       ->join('field_authors fa', new Expression("b.id=fa.entity_id"), "inner")
       ->join('field_categories fc', new Expression("b.id=fc.entity_id"), "inner");
-    if ($title !== "")
+    if (!empty($title))
       $query->where('b.title', "LIKE", '%' . $title . '%');
-    if ($priceFrom !== "")
+    if (!empty($priceFrom))
       $query->where('b.price', ">=", $priceFrom);
-    if ($priceTo !== "")
+    if (!empty($priceTo))
       $query->where('b.price', "<=", $priceTo);
-    if ($author !== "")
+    if (!empty($author))
       $query
         ->join('field_authors fa1', new Expression("b.id=fa1.entity_id"), "inner")
         ->where('fa1.term_id', "=", $author);
-    if ($category !== "")
+    if (!empty($category))
       $query
         ->join('field_categories fc1', new Expression("b.id=fc1.entity_id"), "inner")
         ->where('fc1.term_id', "=", $category);
+    if ($limit)
+      $query
+        ->limit($limit);
     $query->group("b.id");
     $query->get();
 
@@ -297,6 +300,31 @@ class BookModel extends BasicModel
     if (isset($params["description"]))
       $query->set("description", $params["description"]);
     $query->where("id", "=", $id)->update();
+  }
+
+  /**
+   * Validates prices introduced by user in homepage search.
+   *
+   * @param int $priceFrom
+   *    Starting price introduced by user.
+   *
+   * @param $priceTo
+   *    Maximum price introduced by user.
+   *
+   * @return bool
+   *    True if prices are valid, false otherwise.
+   */
+  public function areValidPrices($priceFrom, $priceTo)
+  {
+    $messages = array();
+    if (empty($priceFrom) || empty($priceTo)) {
+      $messages[] = 'Price fields are not set.';
+    }
+    if (is_numeric($priceFrom) === FALSE || is_numeric($priceTo) === FALSE) {
+      $messages[] = 'Prices must be numeric values.';
+    }
+    set_error_messages($messages);
+    return empty($messages);
   }
 
 }

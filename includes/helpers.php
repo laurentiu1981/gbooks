@@ -159,7 +159,8 @@ function gbooks_theme_generate_rating_stars($rating)
   return $ratingStars;
 }
 
-function gbooks_theme_generate_select_options($items, $defaultValue = FALSE, $initialLabel = 'Any') {
+function gbooks_theme_generate_select_options($items, $defaultValue = FALSE, $initialLabel = 'Any')
+{
   $options = '';
   if (!empty($initialLabel)) {
     $options = '<option value="">' . $initialLabel . '</option>';
@@ -168,10 +169,98 @@ function gbooks_theme_generate_select_options($items, $defaultValue = FALSE, $in
   foreach ($items as $value => $label) {
     if ($defaultValue == $value) {
       $options .= '<option selected="selected" value="' . $value . '">' . $label . '</option>';
-    }
-    else {
+    } else {
       $options .= '<option value="' . $value . '">' . $label . '</option>';
     }
   }
   return $options;
+}
+
+/**
+ * Displays books on homepage.
+ *
+ * @param array $books
+ *    Array of books to be displayed.
+ *
+ * @return string
+ *    HTML code for displaying the given books.
+ */
+function gbooks_generate_books($books)
+{
+  $homepageBooks = '';
+  $i = 0;
+  foreach ($books as $book) {
+    if ($i === 0) {
+      $homepageBooks .= '<div class="row">';
+    }
+    $i++;
+    $rating = '';
+    if (!empty($book->getRating())) {
+      $rating = gbooks_theme_generate_rating_stars($book->getRating());
+    }
+    $homepageBooks .= '<div class="col-sm-3">
+        <div class="text-center">
+            <div class="image-wrapper">
+                <img class="img-thumbnail" src="' . $book->getImage() . '">
+            </div>
+            <div class="book-title"><strong>' . $book->getTitle() . '</strong></div>
+            <div>'
+      . $rating . '</div>
+        </div>
+    </div>';
+    if ($i === 4) {
+      $homepageBooks .= '</div>';
+      $i = 0;
+    }
+  }
+  return $homepageBooks;
+}
+
+/**
+ * Set session search fields.
+ *
+ * @param $array
+ *    Array of search fields.
+ */
+function set_search_fields($array)
+{
+  if (!isset($_SESSION)) {
+    session_start();
+  }
+  foreach ($array as $key => $value) {
+    $_SESSION[$key] = $value;
+  }
+}
+
+/**
+ * Get session search fields.
+ *
+ * @return array
+ *    Array of search fields.
+ */
+function get_search_fields()
+{
+  if (!isset($_SESSION)) {
+    session_start();
+  }
+  $array = array('title' => isset($_SESSION['title']) ? $_SESSION['title'] : '',
+    'author' => isset($_SESSION['author']) ? $_SESSION['author'] : '',
+    'category' => isset($_SESSION['category']) ? $_SESSION['category'] : '',
+    'priceFrom' => isset($_SESSION['priceFrom']) ? $_SESSION['priceFrom'] : '',
+    'priceTo' => isset($_SESSION['priceTo']) ? $_SESSION['priceTo'] : '',
+  );
+  return $array;
+}
+
+/**
+ * Unset session search fields.
+ *
+ * @param $array
+ *    Array of search fields.
+ */
+function unset_search_fields($array)
+{
+  foreach ($array as $key => $value) {
+    unset($_SESSION[$key]);
+  }
 }

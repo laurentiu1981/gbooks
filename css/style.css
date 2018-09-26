@@ -66,3 +66,15 @@
 form {
     padding: 0.5em;
 }
+
+#admin-book-table td {
+    text-align: center;
+}
+
+.book-title {
+    min-height: unset;
+}
+
+.messages ul {
+    padding-inline-start: unset;
+}
