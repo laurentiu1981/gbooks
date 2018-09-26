@@ -8,6 +8,7 @@
 
 .book-title {
     min-height: 36px;
+    max-height: 36px;
     overflow: hidden;
 }
 
@@ -40,9 +41,9 @@
 
 .messages .alert {
     padding: 5px;
-    border-radius: 0px;
+    border-radius: 0;
     border: none;
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .user-logged-out .logged-in,
@@ -71,10 +72,16 @@ form {
     text-align: center;
 }
 
-.book-title {
-    min-height: unset;
+.book-box {
+    min-height: 274px;
+    background-color: #f3f3f3;
+    padding: 0.5em;
+    margin: 0.5em;
 }
 
-.messages ul {
-    padding-inline-start: unset;
+.img-thumbnail {
+    max-height: 200px;
+    height: 200px;
+    width: auto;
+    max-width: 230px;
 }

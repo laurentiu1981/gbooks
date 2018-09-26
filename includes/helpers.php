@@ -149,16 +149,31 @@ function gbooks_theme_generate_rating_stars($rating)
 {
   $roundedRating = round($rating);
   $ratingStars = '';
-  for ($i = 0; $i < 5; $i++) {
-    if ($i < $roundedRating) {
-      $ratingStars .= '<span class="glyphicon glyphicon-star"></span>';
-    } else {
-      $ratingStars .= '<span class="glyphicon glyphicon-star-empty"></span>';
+  if ($roundedRating > 0) {
+    for ($i = 0; $i < 5; $i++) {
+      if ($i < $roundedRating) {
+        $ratingStars .= '<span class="glyphicon glyphicon-star"></span>';
+      } else {
+        $ratingStars .= '<span class="glyphicon glyphicon-star-empty"></span>';
+      }
     }
   }
   return $ratingStars;
 }
 
+/** Generate select options.
+ *
+ * @param $items
+ *    Items in option list.
+ *
+ * @param bool $defaultValue
+ *    Default value.
+ *
+ * @param string $initialLabel
+ *    Initial label.
+ *
+ * @return string
+ */
 function gbooks_theme_generate_select_options($items, $defaultValue = FALSE, $initialLabel = 'Any')
 {
   $options = '';
@@ -188,30 +203,8 @@ function gbooks_theme_generate_select_options($items, $defaultValue = FALSE, $in
 function gbooks_generate_books($books)
 {
   $homepageBooks = '';
-  $i = 0;
   foreach ($books as $book) {
-    if ($i === 0) {
-      $homepageBooks .= '<div class="row">';
-    }
-    $i++;
-    $rating = '';
-    if (!empty($book->getRating())) {
-      $rating = gbooks_theme_generate_rating_stars($book->getRating());
-    }
-    $homepageBooks .= '<div class="col-sm-3">
-        <div class="text-center">
-            <div class="image-wrapper">
-                <img class="img-thumbnail" src="' . $book->getImage() . '">
-            </div>
-            <div class="book-title"><strong>' . $book->getTitle() . '</strong></div>
-            <div>'
-      . $rating . '</div>
-        </div>
-    </div>';
-    if ($i === 4) {
-      $homepageBooks .= '</div>';
-      $i = 0;
-    }
+    $homepageBooks .= gbooks_render_template('/views/books/book_box.tpl.php', array('book' => $book));
   }
   return $homepageBooks;
 }
