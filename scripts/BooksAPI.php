@@ -34,8 +34,8 @@ class BooksAPI
   {
     $url = $this->createRequestURL();
     $array = $this->get($url);
-    $nrItems = $array['totalItems'];
-    while (is_null($nrItems) && $this->startIndex < $nrItems) {
+    $nrItems = NULL;
+    while (is_null($nrItems) || $this->startIndex < $nrItems) {
       $items = $array['items'];
       $this->resultArray = $this->addToArray($items);
       $this->startIndex += 40;
