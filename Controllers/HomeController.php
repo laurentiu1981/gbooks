@@ -3,6 +3,7 @@
 namespace Controllers;
 
 
+use Models\BookModel;
 use Models\TermModel;
 
 class HomeController extends BasicController
@@ -20,10 +21,35 @@ class HomeController extends BasicController
   public function homePageAction()
   {
     $termModel = new TermModel();
-    $authorsOptions = gbooks_theme_generate_select_options($termModel->getTermNamesByVocabulary("authors"));
-    $categoriesOptions = gbooks_theme_generate_select_options($termModel->getTermNamesByVocabulary("categories"));
-    $this->content = $this->render('/views/home/home_content.tpl.php');
-    $sidebar = $this->render('/views/forms/home_search_form.tpl.php', array('options' => $authorsOptions, 'optionsCategories' => $categoriesOptions));
+    $bookModel = new BookModel();
+    $books = array();
+    if ($_GET['q'] === '/search') {
+      $services = new Services();
+      if (empty($services->validationMessages($_GET))) {
+        $books = $bookModel->generalFindBy($_GET['title'], $_GET['price-from'], $_GET['price-to'], $_GET['author'], $_GET['category']);
+      } else {
+        set_error_messages($services->validationMessages($_GET));
+      }
+    } else {
+      $books = $bookModel->generalFindBy('', '', '', '', '', 12);
+    }
+
+    $homepageBooks = gbooks_generate_books($books);
+    $authorsOptions = gbooks_theme_generate_select_options(
+      $termModel->getTermNamesByVocabulary("authors"),
+      $_GET['author']
+    );
+    $categoriesOptions = gbooks_theme_generate_select_options(
+      $termModel->getTermNamesByVocabulary("categories"),
+      $_GET['category']
+    );
+    $this->content = $this->render('/views/home/home_content.tpl.php', array('homepageBooks' => $homepageBooks));
+    $sidebar = $this->render('/views/forms/home_search_form.tpl.php', array(
+      'searchFields' => $_GET,
+      'options' => $authorsOptions,
+      'optionsCategories' => $categoriesOptions,
+      'messages' => render_messages(get_messages())
+    ));
     $this->renderLayout('/views/layouts/sidebar_page.tpl.php', array('sidebar' => $sidebar));
   }
 }

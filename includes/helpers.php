@@ -149,17 +149,33 @@ function gbooks_theme_generate_rating_stars($rating)
 {
   $roundedRating = round($rating);
   $ratingStars = '';
-  for ($i = 0; $i < 5; $i++) {
-    if ($i < $roundedRating) {
-      $ratingStars .= '<span class="glyphicon glyphicon-star"></span>';
-    } else {
-      $ratingStars .= '<span class="glyphicon glyphicon-star-empty"></span>';
+  if ($roundedRating > 0) {
+    for ($i = 0; $i < 5; $i++) {
+      if ($i < $roundedRating) {
+        $ratingStars .= '<span class="glyphicon glyphicon-star"></span>';
+      } else {
+        $ratingStars .= '<span class="glyphicon glyphicon-star-empty"></span>';
+      }
     }
   }
   return $ratingStars;
 }
 
-function gbooks_theme_generate_select_options($items, $defaultValue = FALSE, $initialLabel = 'Any') {
+/** Generate select options.
+ *
+ * @param $items
+ *    Items in option list.
+ *
+ * @param bool $defaultValue
+ *    Default value.
+ *
+ * @param string $initialLabel
+ *    Initial label.
+ *
+ * @return string
+ */
+function gbooks_theme_generate_select_options($items, $defaultValue = FALSE, $initialLabel = 'Any')
+{
   $options = '';
   if (!empty($initialLabel)) {
     $options = '<option value="">' . $initialLabel . '</option>';
@@ -168,10 +184,27 @@ function gbooks_theme_generate_select_options($items, $defaultValue = FALSE, $in
   foreach ($items as $value => $label) {
     if ($defaultValue == $value) {
       $options .= '<option selected="selected" value="' . $value . '">' . $label . '</option>';
-    }
-    else {
+    } else {
       $options .= '<option value="' . $value . '">' . $label . '</option>';
     }
   }
   return $options;
+}
+
+/**
+ * Displays books on homepage.
+ *
+ * @param array $books
+ *    Array of books to be displayed.
+ *
+ * @return string
+ *    HTML code for displaying the given books.
+ */
+function gbooks_generate_books($books)
+{
+  $homepageBooks = '';
+  foreach ($books as $book) {
+    $homepageBooks .= gbooks_render_template('/views/books/book_box.tpl.php', array('book' => $book));
+  }
+  return $homepageBooks;
 }

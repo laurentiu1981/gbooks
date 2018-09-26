@@ -244,4 +244,11 @@ class BookEntity
     return $array;
   }
 
+  /**
+   * @return string
+   */
+  public function getStarsHtml()
+  {
+    return gbooks_theme_generate_rating_stars($this->getRating());
+  }
 }

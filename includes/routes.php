@@ -42,6 +42,7 @@ function gbooks_routes_definitions()
       'GET' => 'Controllers\BookController::editPageAction',
       'POST' => 'Controllers\BookController::editPageAction',
     ),
+    '/search' => 'Controllers\HomeController::homepageAction',
   );
 }
 

@@ -167,7 +167,7 @@ class BookModel extends BasicModel
    *
    * @throws \atk4\dsql\Exception
    */
-  public function generalFindBy($title, $priceFrom, $priceTo, $author, $category)
+  public function generalFindBy($title, $priceFrom, $priceTo, $author, $category, $limit = FALSE)
   {
     $query = $this->dsql_connection->dsql();
     $results = $query
@@ -188,20 +188,23 @@ class BookModel extends BasicModel
       ->table('books', "b")
       ->join('field_authors fa', new Expression("b.id=fa.entity_id"), "inner")
       ->join('field_categories fc', new Expression("b.id=fc.entity_id"), "inner");
-    if ($title !== "")
+    if (!empty($title))
       $query->where('b.title', "LIKE", '%' . $title . '%');
-    if ($priceFrom !== "")
+    if (!empty($priceFrom))
       $query->where('b.price', ">=", $priceFrom);
-    if ($priceTo !== "")
+    if (!empty($priceTo))
       $query->where('b.price', "<=", $priceTo);
-    if ($author !== "")
+    if (!empty($author))
       $query
         ->join('field_authors fa1', new Expression("b.id=fa1.entity_id"), "inner")
         ->where('fa1.term_id', "=", $author);
-    if ($category !== "")
+    if (!empty($category))
       $query
         ->join('field_categories fc1', new Expression("b.id=fc1.entity_id"), "inner")
         ->where('fc1.term_id', "=", $category);
+    if ($limit)
+      $query
+        ->limit($limit);
     $query->group("b.id");
     $query->get();
 
