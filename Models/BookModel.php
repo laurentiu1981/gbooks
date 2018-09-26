@@ -212,6 +212,8 @@ class BookModel extends BasicModel
       $categoriesIds = explode(",", $result['categoriesIds']);
       $authorNames = $termModel->getTermNamesByIds($authorsIds);
       $categoryNames = $termModel->getTermNamesByIds($categoriesIds);
+      if (!$result['image'])
+        $result['image'] = "/images/default.jpeg";
       $books[] = new BookEntity(array(
         "id" => $result['id'],
         "title" => $result['title'],
@@ -264,7 +266,8 @@ class BookModel extends BasicModel
     return $termNames;
   }
 
-  public function deleteBook($id) {
+  public function deleteBook($id)
+  {
     $query = $this->dsql_connection->dsql();
     $query->table('books')
       ->where('id', '=', $id)

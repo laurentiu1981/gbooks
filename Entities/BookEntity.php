@@ -127,6 +127,8 @@ class BookEntity
    */
   public function getImage()
   {
+    if (!$this->image)
+      $this->image = "/images/default.jpeg";
     return $this->image;
   }
 
