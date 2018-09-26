@@ -326,5 +326,5 @@ class BookModel extends BasicModel
     set_error_messages($messages);
     return empty($messages);
   }
-
+  
 }
