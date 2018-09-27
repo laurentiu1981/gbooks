@@ -166,15 +166,15 @@ function gbooks_theme_generate_rating_stars($rating)
  * @param $items
  *    Items in option list.
  *
- * @param bool $defaultValue
- *    Default value.
+ * @param array $defaultValue
+ *    Default value of select dropdown.
  *
  * @param string $initialLabel
  *    Initial label.
  *
  * @return string
  */
-function gbooks_theme_generate_select_options($items, $defaultValue = FALSE, $initialLabel = 'Any')
+function gbooks_theme_generate_select_options($items, $defaultValue = array(), $initialLabel = 'Any')
 {
   $options = '';
   if (!empty($initialLabel)) {
@@ -182,7 +182,7 @@ function gbooks_theme_generate_select_options($items, $defaultValue = FALSE, $in
   }
 
   foreach ($items as $value => $label) {
-    if ($defaultValue == $value) {
+    if (in_array($value, $defaultValue)) {
       $options .= '<option selected="selected" value="' . $value . '">' . $label . '</option>';
     } else {
       $options .= '<option value="' . $value . '">' . $label . '</option>';

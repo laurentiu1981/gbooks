@@ -159,16 +159,23 @@ class BookModel extends BasicModel
    *        Minimum price of book.
    * @param number $priceTo
    *        Maximum price of book.
-   * @param number $author
-   *        Term id of the author.
-   *
+   * @param  $authors
+   *        Term ids of the authors.
+   * @param $categories
+   *        Term ids of the categories
    * @return array
    *    List of book entities.
    *
    * @throws \atk4\dsql\Exception
    */
-  public function generalFindBy($title, $priceFrom, $priceTo, $author, $category, $limit = FALSE)
+  public function generalFindBy($title, $priceFrom, $priceTo, $authors, $categories, $limit = FALSE)
   {
+    if (is_string($authors)) {
+      $authors = !empty($authors) ? array($authors) : array();
+    }
+    if (is_string($categories)) {
+      $categories = !empty($categories) ? array($categories) : array();;
+    }
     $query = $this->dsql_connection->dsql();
     $results = $query
       ->field("id")
@@ -188,23 +195,29 @@ class BookModel extends BasicModel
       ->table('books', "b")
       ->join('field_authors fa', new Expression("b.id=fa.entity_id"), "inner")
       ->join('field_categories fc', new Expression("b.id=fc.entity_id"), "inner");
-    if (!empty($title))
+    if (!empty($title)) {
       $query->where('b.title', "LIKE", '%' . $title . '%');
-    if (!empty($priceFrom))
+    }
+    if (!empty($priceFrom)) {
       $query->where('b.price', ">=", $priceFrom);
-    if (!empty($priceTo))
+    }
+    if (!empty($priceTo)) {
       $query->where('b.price', "<=", $priceTo);
-    if (!empty($author))
+    }
+    if (!empty($authors)) {
       $query
         ->join('field_authors fa1', new Expression("b.id=fa1.entity_id"), "inner")
-        ->where('fa1.term_id', "=", $author);
-    if (!empty($category))
+        ->where('fa1.term_id', "in", $authors);
+    }
+    if (!empty($categories)) {
       $query
         ->join('field_categories fc1', new Expression("b.id=fc1.entity_id"), "inner")
-        ->where('fc1.term_id', "=", $category);
-    if ($limit)
+        ->where('fc1.term_id', "in", $categories);
+    }
+    if ($limit) {
       $query
         ->limit($limit);
+    }
     $query->group("b.id");
     $query->get();
 
@@ -269,7 +282,8 @@ class BookModel extends BasicModel
     return $termNames;
   }
 
-  public function deleteBook($id) {
+  public function deleteBook($id)
+  {
     $query = $this->dsql_connection->dsql();
     $query->table('books')
       ->where('id', '=', $id)

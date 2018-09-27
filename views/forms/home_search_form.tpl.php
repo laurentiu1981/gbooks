@@ -6,13 +6,13 @@
   </div>
   <div class="form-group">
     <label for="author">Authors:</label>
-    <select class="form-control chosen-select" id="author" name="author">
+    <select multiple class="form-control chosen-select" id="author" name="author[]">
       <?php echo $options ?>
     </select>
   </div>
   <div class="form-group">
     <label for="category">Categories:</label>
-    <select class="form-control chosen-select" id="category" name="category">
+    <select multiple class="form-control chosen-select" id="category" name="category[]">
       <?php echo $optionsCategories ?>
     </select>
   </div>
