@@ -266,7 +266,8 @@ class BookModel extends BasicModel
     return $termNames;
   }
 
-  public function deleteBook($id) {
+  public function deleteBook($id)
+  {
     $query = $this->dsql_connection->dsql();
     $query->table('books')
       ->where('id', '=', $id)
@@ -300,6 +301,15 @@ class BookModel extends BasicModel
   }
 
 
+  /**
+   * Check if book is already in the database.
+   *
+   * @param array $book
+   *
+   * @return array/false
+   *
+   * @throws \atk4\dsql\Exception
+   */
   public function checkBook($book)
   {
     $query = $this->dsql_connection->dsql();
@@ -311,7 +321,7 @@ class BookModel extends BasicModel
       $query->where("ISBN_10", "=", $book['ISBN_10']);
     if (!empty($book['ISBN_13']))
       $query->where("ISBN_13", "=", $book['ISBN_13']);
-    $result =$query->getRow();
+    $result = $query->getRow();
     return $result;
   }
 
