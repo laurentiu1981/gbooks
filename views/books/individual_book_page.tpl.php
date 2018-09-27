@@ -1,4 +1,9 @@
 <div class="container">
+    <div class="logged-in rounded" id="admin-header">
+        <a href="/admin/book/edit/<?php echo $book->getId() ?>?destination=/book/<?php echo $book->getId() ?>" class="btn btn-info btn-lg">
+            <span class="glyphicon glyphicon-edit"></span> Edit
+        </a>
+    </div>
     <div class="row">
         <div class="col-sm-2">
             <img src="<?php echo $book->getImage() ?>">

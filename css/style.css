@@ -85,3 +85,10 @@ form {
     width: auto;
     max-width: 230px;
 }
+
+#admin-header {
+    background-color: #eeeeee;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
