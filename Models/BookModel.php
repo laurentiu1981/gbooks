@@ -299,4 +299,20 @@ class BookModel extends BasicModel
     $query->where("id", "=", $id)->update();
   }
 
+
+  public function checkBook($book)
+  {
+    $query = $this->dsql_connection->dsql();
+    $query->table("books")
+      ->orExpr();
+    if (!empty($book['title']))
+      $query->where("title", "=", $book['title']);
+    if (!empty($book['ISBN_10']))
+      $query->where("ISBN_10", "=", $book['ISBN_10']);
+    if (!empty($book['ISBN_13']))
+      $query->where("ISBN_13", "=", $book['ISBN_13']);
+    $result =$query->getRow();
+    return $result;
+  }
+
 }
