@@ -159,9 +159,9 @@ class BookModel extends BasicModel
    *        Minimum price of book.
    * @param number $priceTo
    *        Maximum price of book.
-   * @param  $authors
+   * @param  string|array $authors
    *        Term ids of the authors.
-   * @param $categories
+   * @param string|array $categories
    *        Term ids of the categories
    * @return array
    *    List of book entities.
@@ -174,7 +174,7 @@ class BookModel extends BasicModel
       $authors = !empty($authors) ? array($authors) : array();
     }
     if (is_string($categories)) {
-      $categories = !empty($categories) ? array($categories) : array();;
+      $categories = !empty($categories) ? array($categories) : array();
     }
     $query = $this->dsql_connection->dsql();
     $results = $query
