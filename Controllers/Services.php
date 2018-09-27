@@ -21,7 +21,9 @@ class Services extends BasicController
     $books = [];
     if (empty($errors)) {
       $bookModel = new BookModel();
-      $booksEntity = $bookModel->generalFindBy($_POST['title'], $_POST['price-from'], $_POST['price-to'], $_POST['author'], $_POST['category']);
+      $authors = !empty($_POST['author']) ? $_POST['author'] : array();
+      $categories = !empty($_POST['category']) ? $_POST['category'] : array();
+      $booksEntity = $bookModel->generalFindBy($_POST['title'], $_POST['price-from'], $_POST['price-to'], $authors, $categories);
       $books = [];
       foreach ($booksEntity as $book) {
         $books[] = $book->jsonSerialize();
@@ -31,7 +33,7 @@ class Services extends BasicController
     header("Content-Type: application/json");
     $json = json_encode($result);
     echo $json;
-    exit(1);
+    exit();
   }
 
 
