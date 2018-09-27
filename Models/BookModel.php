@@ -304,7 +304,7 @@ class BookModel extends BasicModel
   /**
    * Check if book is already in the database.
    *
-   * @param array $book
+   * @param entity $book
    *
    * @return array/false
    *
@@ -313,14 +313,17 @@ class BookModel extends BasicModel
   public function checkBook($book)
   {
     $query = $this->dsql_connection->dsql();
-    $query->table("books")
-      ->orExpr();
-    if (!empty($book['ISBN_10']))
-      $query->where("ISBN_10", "=", $book['ISBN_10']);
-    if (!empty($book['ISBN_13']))
-      $query->where("ISBN_13", "=", $book['ISBN_13']);
-    if (empty($book['ISBN_10']) && empty($book['ISBN_13']) && !empty($book['title']))
-      $query->where("title", "=", $book['title']);
+    $query->table("books");
+    $query2 = $query->orExpr();
+    if (!empty($book->getISBN10()))
+      $query2->where("ISBN_10", "=", $book->getISBN10());
+    if (!empty($book->getISBN13()))
+      $query2->where("ISBN_13", "=", $book->getISBN13());
+
+    if (empty($book->getISBN10()) && empty($book->getISBN13()) && !empty($book->getTitle()))
+      $query->where("title", "=", $book->getTitle());
+    else
+      $query->where($query2);
     $result = $query->getRow();
     return $result;
   }
