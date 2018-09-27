@@ -169,6 +169,7 @@ class BooksAPI
     return $termArray;
   }
 
+
   /**
    * Saves books into the database.
    */
@@ -177,13 +178,14 @@ class BooksAPI
     $books = $this->getBooks();
     $bookModel = new BookModel();
     foreach ($books as $book) {
+      $bookEntity = new BookEntity($book);
+      if ($bookModel->checkBook($bookEntity))
+        continue;
       $book['authorsIds'] = $this->saveTerms($book['authors'], 'authors');
       $book['categoriesIds'] = $this->saveTerms($book['categories'], 'categories');
       unset($book['authors']);
       unset($book['categories']);
-      $bookEntity = new BookEntity($book);
       $bookModel->save($bookEntity);
     }
   }
-
 }
