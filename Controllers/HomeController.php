@@ -4,6 +4,7 @@ namespace Controllers;
 
 
 use Models\BookModel;
+use Models\Config;
 use Models\TermModel;
 
 class HomeController extends BasicController
@@ -31,7 +32,9 @@ class HomeController extends BasicController
         set_error_messages($services->validationMessages($_GET));
       }
     } else {
-      $books = $bookModel->generalFindBy('', '', '', '', '', 12);
+      $config = new Config();
+      $limit = $config->get("customer_default_max_books_results_per_page", 12);
+      $books = $bookModel->generalFindBy('', '', '', '', '', $limit);
     }
 
     $defaultAuthor = isset($_GET['author']) ? $_GET['author'] : '';
