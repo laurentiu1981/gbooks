@@ -2,7 +2,7 @@
 
 namespace Controllers;
 
-use models\UserModel;
+use Models\UserModel;
 
 class UserAuthenticationController extends BasicController
 {
