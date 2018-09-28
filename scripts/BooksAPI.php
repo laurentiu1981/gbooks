@@ -44,6 +44,9 @@ class BooksAPI
         $array = $this->get($url);
         $nrItems = $array['totalItems'];
       }
+      else {
+        break;
+      }
     }
     return $this->resultArray;
   }
