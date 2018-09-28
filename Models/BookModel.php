@@ -193,8 +193,8 @@ class BookModel extends BasicModel
       ->field(new Expression("group_concat(fa.term_id) as authorIds"))
       ->field(new Expression("group_concat(fc.term_id) as categoriesIds"))
       ->table('books', "b")
-      ->join('field_authors fa', new Expression("b.id=fa.entity_id"), "inner")
-      ->join('field_categories fc', new Expression("b.id=fc.entity_id"), "inner");
+      ->join('field_authors fa', new Expression("b.id=fa.entity_id"))
+      ->join('field_categories fc', new Expression("b.id=fc.entity_id"));
     if (!empty($title)) {
       $query->where('b.title', "LIKE", '%' . $title . '%');
     }
