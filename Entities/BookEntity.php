@@ -220,6 +220,25 @@ class BookEntity
     return isset($this->categoriesIds) ? $this->categoriesIds : array();
   }
 
+
+  /**
+   * @param array $authorsIds
+   *   Authors Ids.
+   */
+  public function setAuthorsIds($authorsIds)
+  {
+    $this->authorsIds = $authorsIds;
+  }
+
+  /**
+   * @param array $categoriesIds
+   *   Categories Ids.
+   */
+  public function setCategoriesIds($categoriesIds)
+  {
+    $this->categoriesIds = $categoriesIds;
+  }
+
   /**
    * @return array
    */

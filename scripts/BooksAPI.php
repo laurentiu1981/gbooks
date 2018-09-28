@@ -178,13 +178,13 @@ class BooksAPI
     $books = $this->getBooks();
     $bookModel = new BookModel();
     foreach ($books as $book) {
-      $bookEntity = new BookEntity($book);
-      if ($bookModel->checkBook($bookEntity))
+      if ($bookModel->checkBook($book))
         continue;
       $book['authorsIds'] = $this->saveTerms($book['authors'], 'authors');
       $book['categoriesIds'] = $this->saveTerms($book['categories'], 'categories');
       unset($book['authors']);
       unset($book['categories']);
+      $bookEntity = new BookEntity($book);
       $bookModel->save($bookEntity);
     }
   }
